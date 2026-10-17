@@ -8,7 +8,7 @@ function postUrl(key,value){const number=postNumber(key,value);return number?'/'
 function fixLink(a){if(a.tagName!=='A'||!a.getAttribute('href'))return;try{const u=new URL(a.getAttribute('href'),document.baseURI);if(u.origin!==location.origin)return;const name=/^\/([a-z-]+)\.html$/.exec(u.pathname)?.[1],value=u.searchParams.get('id');if(!boards.has(name)||!value)return;const target=postUrl(name,value);if(!target.includes('?id='))a.setAttribute('href',target+u.hash)}catch{}}
 function scan(root){if(root.nodeType!==1)return;fixLink(root);root.querySelectorAll('a[href]').forEach(fixLink)}
 function base(){if(!document.querySelector('base')){const tag=document.createElement('base');tag.href='/';document.head.prepend(tag)}}
-const api={board,postUrl,postNumber,boardUrl:key=>'/'+key+'/',get id(){return id},async params(){await api.ready;const result=new URLSearchParams(original);if(id&&!editing)result.set('id',id);return result}};
+const api={board,postUrl,postNumber,boardUrl:key=>registry.boards?.[key]?'/'+key+'/':'/'+key+'.html',get id(){return id},async params(){await api.ready;const result=new URLSearchParams(original);if(id&&!editing)result.set('id',id);return result}};
 api.ready=(async()=>{try{const response=await fetch('/post-routes.json',{cache:'no-store'});if(response.ok)registry=await response.json()}catch{}
 if(board&&pretty?.[2]&&!id){const group=registry.boards?.[board];id=group?.active?.find(value=>String(group.posts[value])===pretty[2])||null}
 if(board&&id&&!editing){const target=postUrl(board,id);if(!target.includes('?id=')){base();history.replaceState(null,'',target+location.hash);document.querySelector('a.skip')?.setAttribute('href',target+'#main')}}
