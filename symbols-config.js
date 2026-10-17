@@ -3,7 +3,7 @@ window.GEUMSEONG_SYMBOLS={
   "mark": {
     "title": "구마크(City Identity)",
     "description": "금성도를 나타내는 구마크입니다.",
-    "image": "blob/main/assets/favicon.svg",
+    "image": "assets/geumseong-icon.svg",
     "alt": "금성도 심볼",
     "details": [
       "대표색: #845BA6",
@@ -12,13 +12,13 @@ window.GEUMSEONG_SYMBOLS={
     "downloads": [
       {
         "label": "SVG 다운로드",
-        "href": "blob/main/assets/favicon.svg"
+        "href": "assets/geumseong-icon.svg"
       }
     ],
     "signatures": [
       {
         "label": "심볼",
-        "image": "blob/main/assets/favicon.svg"
+        "image": "assets/geumseong-icon.svg"
       },
       {
         "label": "상하조합",
