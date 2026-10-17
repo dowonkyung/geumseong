@@ -142,8 +142,10 @@ body.board-page .content-head .content-title-wrap .content-actions button{backgr
 
 
 /* Fit preview containers to the rendered document instead of reserving empty viewport space. */
-body.preview-page #file-preview{min-height:0;padding-bottom:0}
+body.preview-page #file-preview{min-height:0;padding-bottom:20px}
 body.preview-page #file-preview .pdf-stage{height:auto;min-height:0;padding-bottom:0}
 body.preview-page #file-preview .preview-text,
 body.preview-page #file-preview .preview-error{margin-top:0;margin-bottom:0}
 body.preview-page #file-preview .preview-image{display:block;margin-bottom:0}
+
+@media(max-width:767px){body.preview-page #file-preview{padding-bottom:10px}}
