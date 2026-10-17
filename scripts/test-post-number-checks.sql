@@ -1,12 +1,13 @@
-do $$ declare first_id uuid:=gen_random_uuid(); second_id uuid:=gen_random_uuid(); n bigint;begin
+do $$ declare first_id uuid:=gen_random_uuid(); second_id uuid:=gen_random_uuid(); n bigint; expected bigint;begin
+ select next_number into expected from post_route_counters where site='angangjin' and board='press';
  insert into publication_posts(id,board_type,status) values(first_id,'press','draft');
  if exists(select 1 from post_route_numbers where post_id=first_id) then raise exception 'Draft consumed number';end if;
  update publication_posts set status='published' where id=first_id;
  select number into n from post_route_numbers where post_id=first_id;
- if n<>2 then raise exception 'Existing press number was not preserved: %',n;end if;
+ if n<>expected then raise exception 'Existing press number was not preserved: %',n;end if;
  delete from publication_posts where id=first_id;
  insert into publication_posts(id,board_type) values(second_id,'press');
- if (select number from post_route_numbers where post_id=second_id)<>3 then raise exception 'Deleted number reused';end if;
+ if (select number from post_route_numbers where post_id=second_id)<>expected+1 then raise exception 'Deleted number reused';end if;
  if exists(select 1 from public_post_routes('angangjin') where post_id=first_id) then raise exception 'Deleted post exposed';end if;
  insert into geumseong_publication_posts(board_type) values('press');
  if (select min(number) from public_post_routes('geumseong') where board='press')<>1 then raise exception 'Sites share counters';end if;
