@@ -89,7 +89,7 @@ insert into public.post_route_counters values('geumseong','civil-board',1) on co
 
 insert into public.post_route_counters values('angangjin','press',3) on conflict(site,board) do update set next_number=greatest(post_route_counters.next_number,excluded.next_number);
 insert into public.post_route_numbers(site,board,post_id,number) values('angangjin','press','97294eef-c534-4a21-aa09-c1ae9bba938c',2) on conflict(site,board,post_id) do nothing;
-do $ declare s text; t text; site_name text; fixed_board text; r record; begin
+do $$ declare s text; t text; site_name text; fixed_board text; r record; begin
  foreach s in array array['','geumseong_'] loop
  site_name:=case when s='' then 'angangjin' else 'geumseong' end;
  foreach t in array array['news_posts','notice_posts','publication_posts','photo_posts','community_posts','video_posts'] loop
