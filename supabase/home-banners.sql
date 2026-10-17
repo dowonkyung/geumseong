@@ -9,7 +9,7 @@ create table if not exists public.site_home_banners(
 );
 alter table public.site_home_banners enable row level security;
 revoke all on public.site_home_banners from anon,authenticated;
-grant select on public.site_home_banners to anon,authenticated;
+grant select(site,version,payload) on public.site_home_banners to anon,authenticated;
 drop policy if exists home_banners_read on public.site_home_banners;
 create policy home_banners_read on public.site_home_banners for select to anon,authenticated using(true);
 create or replace function public.save_site_home_banners(p_site text,p_payload jsonb,p_expected_version integer) returns integer
