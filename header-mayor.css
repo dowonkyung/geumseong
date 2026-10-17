@@ -87,3 +87,5 @@ header .header-middle .etc-menu{align-items:center}
 header #gnb:not(:has(>ul>li.active))>ul>li.current-section>a{color:#56386E;font-weight:700}header #gnb .gnb-wrap .wrap>ul>li.current-item.active>a{background:#fff;font-weight:700}header #gnb .gnb-wrap a[aria-current="page"]{font-weight:700;text-decoration:none}header #gnb .depth3-wrap li>a[aria-current="page"]{background:#EEF2F7;border-radius:6px}
 
 @media only screen and (min-width:64em){header #gnb .gnb-wrap.type-depth3 .wrap>ul>li>a{font-size:18px}}
+
+header .header-search .header-search-btn{background-color:#845BA6}header .header-search .header-search-btn:hover{background-color:#694884}
