@@ -1,4 +1,4 @@
--- Run ONCE in the existing shared Supabase project's SQL Editor. Applies to BOTH sites.
+-- Install or UPGRADE in the existing shared Supabase SQL Editor. Run once for BOTH sites; existing banners are preserved.
 begin;
 create table if not exists public.site_home_banners(
  site text primary key check(site in ('angangjin','geumseong')),
