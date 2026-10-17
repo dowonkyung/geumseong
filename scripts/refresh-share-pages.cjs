@@ -1,30 +1,35 @@
-const fs=require('fs'),path=require('path'),vm=require('vm'),crypto=require('crypto');
-const root=path.resolve(__dirname,'..'),origin='https://geumseong.saevit.online',fallback=origin+'/assets/og-geumseong.png';
-const ctx={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'board-config.js'),'utf8'),ctx);
-const config=ctx.window.GEUMSEONG_BOARD_CONFIG;
-const sdk=vm.runInThisContext(fs.readFileSync(path.join(root,'assets/vendor/supabase.js'),'utf8')+';supabase');
-const client=sdk.createClient(config.supabaseUrl,config.publishableKey,{auth:{persistSession:false,autoRefreshToken:false}});
-const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-async function rows(table,columns,published=true){let result=[];for(let offset=0;;offset+=500){let q=client.from(table).select(columns).order('id').range(offset,offset+499);if(published)q=q.eq('status','published');const {data,error}=await q;if(error){if(['42P01','PGRST205'].includes(error.code))return [];throw Error(table+': '+error.message)}result.push(...data);if(data.length<500)return result}}
-async function image(bucket,key){if(!key)return fallback;const {data,error}=await client.storage.from(bucket).createSignedUrl(key,300);if(error)throw Error('Thumbnail unavailable: '+error.message);const response=await fetch(data.signedUrl,{redirect:'error'});if(!response.ok)throw Error('Thumbnail HTTP '+response.status);const mime=(response.headers.get('content-type')||'').split(';')[0],ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp','image/gif':'gif'}[mime];if(!ext)return fallback;const bytes=Buffer.from(await response.arrayBuffer());if(bytes.length>10*1024*1024)throw Error('Thumbnail too large');const file='og/'+crypto.createHash('sha256').update(bytes).digest('hex')+'.'+ext;files.set(file,bytes);return origin+'/share/'+file}
-const files=new Map();
-async function main(){const manifest={};const groups=await Promise.all([
-rows('geumseong_news_posts','id,title').then(rs=>rs.map(r=>({...r,board_type:'news'}))),
-rows('geumseong_notice_posts','id,title,board_type'),
-rows('geumseong_publication_posts','id,title,board_type,thumbnail_path').then(rs=>rs.map(r=>({...r,bucket:'geumseong-publication-files'}))),
-rows('geumseong_photo_posts','id,title,thumbnail_path').then(rs=>rs.map(r=>({...r,board_type:'photo',bucket:'geumseong-photo-files'}))),
-rows('geumseong_community_posts','id,title,board_type,created_at',false)
+const fs=require('fs'),path=require('path'),vm=require('vm'),crypto=require('crypto'),pages=require('./post-pages.cjs');
+const root=path.resolve(__dirname,'..'),site="geumseong",origin='https://'+site+'.saevit.online',fallback=origin+'/assets/og-'+site+'.png';
+const ctx={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'board-config.js'),'utf8'),ctx);const config=ctx.window[site.toUpperCase()+'_BOARD_CONFIG'];
+const sdk=vm.runInThisContext(fs.readFileSync(path.join(root,'assets/vendor/supabase.js'),'utf8')+';supabase'),client=sdk.createClient(config.supabaseUrl,config.publishableKey,{auth:{persistSession:false,autoRefreshToken:false}}),prefix=site==='geumseong'?'geumseong_':'',bucketPrefix=site==='geumseong'?'geumseong-':'',files=new Map(),imageCache=new Map();
+async function read(table,columns,published=false){const result=[];for(let offset=0;;offset+=500){let query=client.from(prefix+table).select(columns).order('id').range(offset,offset+499);if(published)query=query.eq('status','published');const r=await query;if(r.error){if(['42P01','PGRST205'].includes(r.error.code))return [];throw Error(table+': '+r.error.message)}result.push(...r.data);if(r.data.length<500)return result}}
+const mimes={'image/png':'png','image/jpeg':'jpg','image/webp':'webp','image/gif':'gif'},extensions={png:'image/png',jpg:'image/jpeg',jpeg:'image/jpeg',webp:'image/webp',gif:'image/gif'};
+function cache(bytes,mime){const ext=mimes[mime];if(!ext||!bytes.length||bytes.length>10*1024*1024)return null;const file='og/'+crypto.createHash('sha256').update(bytes).digest('hex')+'.'+ext;files.set(file,bytes);return origin+'/share/'+file}
+async function storageImage(bucket,asset){const key=bucket+'/'+asset.storage_path;if(imageCache.has(key))return imageCache.get(key);const task=(async()=>{try{const r=await client.storage.from(bucket).createSignedUrl(asset.storage_path,300);if(r.error||!r.data?.signedUrl)return null;const u=new URL(r.data.signedUrl);if(u.origin!==new URL(config.supabaseUrl).origin)return null;const response=await fetch(u,{redirect:'error'});if(!response.ok)return null;const mime=(response.headers.get('content-type')||'').split(';')[0].trim();if(!mimes[mime]||Number(response.headers.get('content-length'))>10*1024*1024)return null;return cache(Buffer.from(await response.arrayBuffer()),mime)}catch{return null}})();imageCache.set(key,task);return task}
+function directImage(value){if(!value)return null;const data=/^data:(image\/(?:png|jpeg|webp|gif));base64,([A-Za-z0-9+/]*={0,2})$/i.exec(value);if(data)return data[2].length<=14*1024*1024?cache(Buffer.from(data[2],'base64'),data[1].toLowerCase()):null;
+try{const url=new URL(value,origin+'/');if(!['http:','https:'].includes(url.protocol)||url.username||url.password)return null;if(url.origin===origin&&url.pathname.startsWith('/assets/')){const candidate=path.resolve(root,'.'+decodeURIComponent(url.pathname)),assetsRoot=path.join(root,'assets')+path.sep;if(!candidate.startsWith(assetsRoot))return null;const mime=extensions[path.extname(candidate).slice(1).toLowerCase()];return mime&&fs.existsSync(candidate)?cache(fs.readFileSync(candidate),mime):null}if(url.origin===new URL(config.supabaseUrl).origin||url.hostname==='localhost'||url.hostname==='127.0.0.1')return null;return url.href}catch{return null}}
+function imageAsset(asset){return Boolean(mimes[String(asset.mime||'').split(';')[0]]||extensions[String(asset.file_name||asset.storage_path||'').split('.').pop().toLowerCase()])}
+async function previewImage(row,assets){if(row.youtube_id&&/^[A-Za-z0-9_-]{11}$/.test(row.youtube_id))return 'https://i.ytimg.com/vi/'+row.youtube_id+'/hqdefault.jpg';
+const own=assets.filter(a=>a.post_id===row.id).sort((a,b)=>String(a.created_at||'').localeCompare(String(b.created_at||''))),tried=new Set();
+async function assetImage(asset){if(!asset||!imageAsset(asset)||tried.has(asset.storage_path))return null;tried.add(asset.storage_path);return storageImage(row.bucket,asset)}
+let image=await assetImage(own.find(a=>a.storage_path===row.thumbnail_path));if(image)return image;
+for(const tag of pages.imageTags(row.body_html)){image=await assetImage(own.find(a=>a.storage_path===tag['data-storage-path']));if(!image)image=directImage(tag.src);if(image)return image}
+for(const asset of own.filter(a=>a.kind==='inline').concat(own.filter(a=>a.kind!=='inline'&&a.kind!=='preview'))){image=await assetImage(asset);if(image)return image}
+for(const attachment of row.attachments||[]){image=directImage(attachment.data);if(image)return image}return fallback}
+async function main(){
+const groups=await Promise.all([
+read('news_posts','id,title,created_at,body_text,body_html',true).then(rs=>rs.map(r=>({...r,board_type:'news',bucket:bucketPrefix+'news-files'}))),
+read('notice_posts','id,title,board_type,created_at,body_text,body_html',true).then(rs=>rs.map(r=>({...r,bucket:bucketPrefix+'notice-files'}))),
+read('publication_posts','id,title,board_type,created_at,body_text,body_html,summary,thumbnail_path',true).then(rs=>rs.map(r=>({...r,bucket:bucketPrefix+'publication-files'}))),
+read('photo_posts','id,title,created_at,body_text,body_html,summary,thumbnail_path',true).then(rs=>rs.map(r=>({...r,board_type:'photo',bucket:bucketPrefix+'photo-files'}))),
+read('community_posts','id,title,board_type,created_at,body_html,attachments'),
+read('video_posts','id,title,created_at,youtube_id,published_on').then(rs=>rs.map(r=>({...r,board_type:'video'})))
 ]);
-const civilRegistry=require('./build-civil-routes.cjs').build(root,groups.flat(),origin,"금성도",fallback,"잘먹고 잘살고 잘먹고사는 인민의 도시, 금성도 금성도입니다.");
-for(const row of groups.flat()){if(!/^[a-z-]+$/.test(row.board_type)||! /^[0-9a-f-]{36}$/i.test(row.id))continue;
-const imageUrl=row.thumbnail_path?await image(row.bucket,row.thumbnail_path):fallback;
-const route=row.board_type+'/'+row.id,share='/share/'+route+'/',target=row.board_type==='civil-board'?'/civil-board/'+civilRegistry.posts[row.id]+'/':'/'+row.board_type+'.html?id='+encodeURIComponent(row.id),title=row.title+' | 금성도',description='잘먹고 잘살고 잘먹고사는 인민의 도시, 금성도 금성도입니다.';
-manifest[route]=row.board_type==='civil-board'?'/civil-board/'+civilRegistry.posts[row.id]+'/':share;
-files.set(route+'/index.html','<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(title)+'</title><meta name="description" content="'+escape(description)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+escape(title)+'"><meta property="og:description" content="'+escape(description)+'"><meta property="og:image" content="'+escape(imageUrl)+'"><meta property="og:url" content="'+origin+share+'"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="'+escape(title)+'"><meta name="twitter:image" content="'+escape(imageUrl)+'"><link rel="canonical" href="'+origin+share+'"><script src="/share-redirect.js" defer></script></head><body><h1>'+escape(row.title)+'</h1><a data-post-link href="'+target+'">게시글 보기</a></body></html>');
-}
-files.set('manifest.json',JSON.stringify(manifest,null,2)+'\n');
-const destination=path.join(root,'share'),stage=path.join(root,'.share-stage');fs.mkdirSync(stage,{recursive:true});
-for(const [name,content] of files){const file=path.join(stage,name);fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,content)}
-fs.rmSync(destination,{recursive:true,force:true});fs.renameSync(stage,destination);console.log('Share previews: '+Object.keys(manifest).length);
+const assetGroups=await Promise.all(['news','notice','publication','photo'].map(async group=>({bucket:bucketPrefix+group+'-files',rows:await read(group+'_assets','post_id,storage_path,kind,mime,file_name,created_at')})));
+const assets=new Map(assetGroups.map(group=>[group.bucket,group.rows])),posts=groups.flat().filter(row=>pages.boards.includes(row.board_type)&&/^[0-9a-f-]{36}$/i.test(row.id));
+for(const row of posts)row.share_image=await previewImage(row,assets.get(row.bucket)||[]);
+const registryFile=path.join(root,'post-routes.json'),civilFile=path.join(root,'civil-board/routes.json'),previous=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):null,civil=fs.existsSync(civilFile)?JSON.parse(fs.readFileSync(civilFile,'utf8')):null,registry=pages.assign(previous,posts,civil),result=pages.build(root,posts,registry,origin,site);
+for(const [file,html]of result.legacy)files.set(file,html);files.set('manifest.json',JSON.stringify(result.manifest,null,2)+'\n');
+const destination=path.join(root,'share'),stage=path.join(root,'.share-stage');fs.rmSync(stage,{recursive:true,force:true});fs.mkdirSync(stage,{recursive:true});for(const [name,content]of files){const file=path.join(stage,name);fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,content)}fs.rmSync(destination,{recursive:true,force:true});fs.renameSync(stage,destination);console.log('Post routes and previews: '+Object.keys(result.manifest).length);
 }
 main().catch(e=>{console.error(e.message);process.exitCode=1});

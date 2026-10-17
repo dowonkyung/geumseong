@@ -1,4 +1,6 @@
 (function(){'use strict';
+if(window.PostRoutes){const api={get id(){return window.PostRoutes.id},postUrl:window.PostRoutes.postUrl,boardUrl:window.PostRoutes.boardUrl};api.ready=window.PostRoutes.ready.then(()=>api);window.CivilRoute=api;return;}
+
 const board=document.body?.dataset.communityBoard,isCivil=board==='civil-board',write=document.body?.dataset.boardMode==='write',params=new URLSearchParams(location.search);
 let routes={},active=new Set();
 function postUrl(key,id){const number=routes[id];return key==='civil-board'&&active.has(id)&&Number.isSafeInteger(number)?'/civil-board/'+number+'/':'/'+key+'.html?id='+encodeURIComponent(id)}
