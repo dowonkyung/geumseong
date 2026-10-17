@@ -1,0 +1,22 @@
+name: Upgrade all banner locations
+on:
+  push:
+    paths: ['.github/workflows/upgrade-banner-locations.yml']
+permissions:
+  contents: write
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node --check home-banners.js
+      - run: node --check mayor-office.js
+      - run: node scripts/upgrade-banner-locations.cjs
+      - run: node scripts/sync-navigation.cjs
+      - name: Save banner integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Enable footer banner editor on mayor office home"
+          git push
