@@ -3,22 +3,22 @@ window.GEUMSEONG_SYMBOLS={
   "mark": {
     "title": "구마크(City Identity)",
     "description": "금성도를 나타내는 구마크입니다.",
-    "image": "assets/symbols/district-symbol.svg",
+    "image": "blob/main/assets/favicon.svg",
     "alt": "금성도 심볼",
     "details": [
       "대표색: #845BA6",
-      "금성도가 추구하는 도시 비전과, 우리 구 구성원의 심상을 두 가지 컬러로 함축하여, Blue는 신뢰·지성·청렴·발전을 나타내며 사람 중심 행정을 펼치는 금성도가 만들어갈 건전한 도시 정신을 상징합니다. Red는 역동·선의·젊음을 나타내는 색상으로 금성도 구성원의 올곧고 선한 마음과 타오르는 열정, 그리고 끊임없는 도전 정신을 나타냅니다."
+      "꽃의 형상은 금성도민의 뜻이 모여 만들어진 금성도를 상징하며, 중심의 공간은 도민에게 열려있고 가감없는 투명한 도정의 의미가 담겨있다."
     ],
     "downloads": [
       {
         "label": "SVG 다운로드",
-        "href": "assets/symbols/district-symbol.svg"
+        "href": "blob/main/assets/favicon.svg"
       }
     ],
     "signatures": [
       {
         "label": "심볼",
-        "image": "assets/symbols/district-symbol.svg"
+        "image": "blob/main/assets/favicon.svg"
       },
       {
         "label": "상하조합",
@@ -26,17 +26,17 @@ window.GEUMSEONG_SYMBOLS={
       },
       {
         "label": "좌우조합",
-        "image": "assets/geumseong-hor.svg"
+        "image": "assets/geumseong-logo-brand.svg"
       }
     ],
     "colors": [
       {
-        "name": "금성 블루",
+        "name": "금성 퍼플",
         "hex": "#845BA6",
         "rgb": "R42 G92 B170"
       },
       {
-        "name": "금성 레드",
+        "name": "금성 민트",
         "hex": "#16BECF",
         "rgb": "R240 G78 B76"
       }
@@ -55,12 +55,12 @@ window.GEUMSEONG_SYMBOLS={
     "typefaces": [
       {
         "name": "Pretendard GOV",
-        "sample": "도민이 주인인 금성",
+        "sample": "도민 성공 시대!",
         "weight": 400
       },
       {
         "name": "Pretendard GOV Bold",
-        "sample": "도민이 행복한 금성",
+        "sample": "돈 버는 금성도!",
         "weight": 700
       }
     ]
@@ -78,7 +78,7 @@ window.GEUMSEONG_SYMBOLS={
   "slogan": {
     "title": "도정구호",
     "description": "",
-    "image": "assets/slogan.png",
+    "image": "assets/geumseong-vision.svg",
     "fallback": "assets/governor-slogan.svg",
     "alt": "금성도 도정구호",
     "details": [
@@ -86,8 +86,8 @@ window.GEUMSEONG_SYMBOLS={
     ],
     "downloads": [
       {
-        "label": "PNG 다운로드",
-        "href": "assets/slogan.png"
+        "label": "SVG 다운로드",
+        "href": "assets/geumseong-vision.svg"
       }
     ]
   }
