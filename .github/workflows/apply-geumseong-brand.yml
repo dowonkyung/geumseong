@@ -1,0 +1,31 @@
+name: Apply Geumseong branding
+on:
+  push:
+    paths: ['.github/workflows/apply-geumseong-brand.yml']
+permissions:
+  contents: write
+jobs:
+  brand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node scripts/apply-geumseong-brand.cjs
+      - name: Generate social preview from supplied logo
+        run: |
+          python -m pip install cairosvg
+          python <<'PY'
+          import cairosvg, io
+          from PIL import Image
+          logo = Image.open(io.BytesIO(cairosvg.svg2png(url='assets/geumseong-logo-brand.svg',output_width=1000,output_height=325))).convert('RGBA')
+          canvas = Image.new('RGB',(1200,630),'white')
+          canvas.paste(logo,(100,152),logo)
+          canvas.save('assets/og-geumseong.png')
+          PY
+      - run: node scripts/sync-navigation.cjs
+      - name: Save branding
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Apply supplied Geumseong logo, emblem, colors and governor name"
+          git push
