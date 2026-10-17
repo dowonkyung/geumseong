@@ -80,22 +80,17 @@ window.GEUMSEONG_OFFICE={
   ],
   "greetingTitle": "금성도지사 신제희입니다.",
   "greetingSubtitle": "존경하고 사랑하는 금성도민 동지들!",
-  "greetingPortrait": "assets/governors/greeting-eunseo.png",
+  "greetingPortrait": "assets/governors/greeting-shinjehee.png",
   "greetingDate": "2026년 10월 8일",
   "greetingSign": "신 제 희",
-  "profilePortrait": "assets/governors/profile-song.png",
+  "profilePortrait": "assets/governors/shinshinshin.png",
   "profileTitle": "신제희 금성도지사",
   "education": [
-    "금성고 졸업",
-    "도원경종합대학 도원경주의학과 삼잘주의전공 졸업"
-  ],
+  "새빛남고 졸업",
+  "도원경종합대학교 교육학과 졸업"
+],
   "career": [
-    "민선1기 금성도지사",
-    "특급《쩝쩝이》행위로 실각",
-    "전) 실론 최고인민회의 대의원 (홍매화선거구)",
-    "전) 실론 국가주석 생활수석비서관",
-    "전) 실론 국가보위부장",
-    "전) 도원경종합대 교수",
-    "전) 실론공산당 정치국 상무위원"
-  ]
+  "민선1기 금성도지사",
+  "초대 국회의원 (안남시 비례대표 / 미래희망련대)"
+]
 };
