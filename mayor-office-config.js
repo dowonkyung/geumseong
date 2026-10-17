@@ -24,10 +24,10 @@ window.GEUMSEONG_NAV_MENU={
 };
 window.GEUMSEONG_OFFICE={
   "name": "신제희",
-  "portrait": "assets/mayors/song-eunseok.png",
+  "portrait": "assets/mayors/shin-jehee.png",
   "banners": [
     {
-      "image": "assets/mayors/song-eunseok.png",
+      "image": "assets/mayors/shin-jehee.png",
       "title": "금성도지사 신제희입니다.",
       "position": "center 32%",
       "page": "greeting"
