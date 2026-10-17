@@ -89,3 +89,32 @@ header #gnb:not(:has(>ul>li.active))>ul>li.current-section>a{color:#56386E;font-
 @media only screen and (min-width:64em){header #gnb .gnb-wrap.type-depth3 .wrap>ul>li>a{font-size:18px}}
 
 header .header-search .header-search-btn{background-color:#845BA6}header .header-search .header-search-btn:hover{background-color:#694884}
+
+
+/* Alternate the municipal logo and vision every five seconds without moving the header. */
+header .header-middle .bottom-menu .logo h1 a[href="./"]{
+ position:relative;background-image:none;
+}
+header .header-middle .bottom-menu .logo h1 a[href="./"]::before,
+header .header-middle .bottom-menu .logo h1 a[href="./"]::after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background-position:center;background-size:contain;background-repeat:no-repeat;
+ animation:geumseong-header-logo-fade 10s linear infinite;
+}
+header .header-middle .bottom-menu .logo h1 a[href="./"]::before{
+ background-image:url("assets/geumseong-logo-brand.svg");
+}
+header .header-middle .bottom-menu .logo h1 a[href="./"]::after{
+ background-image:url("assets/geumseong-vision.svg");
+ animation-name:geumseong-header-vision-fade;
+}
+@keyframes geumseong-header-logo-fade{
+ 0%,44%{opacity:1}50%,94%{opacity:0}100%{opacity:1}
+}
+@keyframes geumseong-header-vision-fade{
+ 0%,44%{opacity:0}50%,94%{opacity:1}100%{opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+ header .header-middle .bottom-menu .logo h1 a[href="./"]::before{animation:none;opacity:1}
+ header .header-middle .bottom-menu .logo h1 a[href="./"]::after{animation:none;opacity:0}
+}
