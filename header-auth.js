@@ -22,11 +22,6 @@
    if(label){[...label.childNodes].filter(n=>n.nodeType===3).forEach(n=>n.remove());label.append(state.user?'로그아웃':'로그인')}else a.textContent=state.user?'로그아웃':'로그인을 해주세요';
    a.setAttribute('aria-label',state.user?'로그아웃':'로그인');
   });
-  document.querySelectorAll('.etc-menu').forEach(menu=>{
-   let entry=menu.querySelector('.membership-manage');
-   if(state.admin&&!entry){entry=document.createElement('li');entry.className='membership-manage';const a=document.createElement('a');a.href='#membership';a.textContent='가입 승인';a.onclick=e=>{e.preventDefault();openManagement()};entry.append(a);menu.insertBefore(entry,menu.querySelector('.login'))}
-   if(!state.admin&&entry)entry.remove();
-  });
   if(!state.admin&&management.open)management.close();
   window.dispatchEvent(new CustomEvent('header-auth-change',{detail:state}));
  }
