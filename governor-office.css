@@ -47,3 +47,5 @@
 @media only screen and (max-width:63.99em){.office-gallery{padding:60px 0}.office-gallery .inner{width:calc(100% - 80px)}}
 @media only screen and (max-width:47.99em){.office-gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px}.office-gallery-card .office-gallery-image>img{border-radius:10px}.office-gallery-card p{font-size:15px}.office-gallery-play{top:12px;right:12px}}
 @media only screen and (max-width:29.99em){.office-gallery .inner{width:calc(100% - 32px)}.office-gallery-tabs{gap:8px}.office-gallery-tabs button{width:auto;padding:0 20px}.office-gallery .office-title h2{font-size:26px}.office-gallery .office-title h2 span{display:inline;font-size:inherit}}
+
+.office-gallery-grid:has(>.office-empty){display:block}
