@@ -28,7 +28,7 @@ window.GEUMSEONG_OFFICE={
   "banners": [
     {
       "image": "assets/mayors/song-eunseok.png",
-      "title": "금성도청장 송은석입니다.",
+      "title": "금성도지사 송은석입니다.",
       "position": "center 32%",
       "page": "greeting"
     },
@@ -63,7 +63,7 @@ window.GEUMSEONG_OFFICE={
     ],
     [
       "현직",
-      "금성도청장"
+      "금성도지사"
     ]
   ],
   "inaugural": [],
@@ -74,23 +74,23 @@ window.GEUMSEONG_OFFICE={
     {
       "type": "photo",
       "image": "assets/mayors/song-eunseok.png",
-      "title": "송은석 금성도청장",
+      "title": "송은석 금성도지사",
       "page": "profile"
     }
   ],
-  "greetingTitle": "금성도청장 송은석입니다.",
+  "greetingTitle": "금성도지사 송은석입니다.",
   "greetingSubtitle": "존경하고 사랑하는 금성도민 동지들!",
   "greetingPortrait": "assets/mayors/greeting-eunseo.png",
   "greetingDate": "2026년 10월 8일",
   "greetingSign": "송 은 석",
   "profilePortrait": "assets/mayors/profile-song.png",
-  "profileTitle": "송은석 금성도청장",
+  "profileTitle": "송은석 금성도지사",
   "education": [
     "금성고 졸업",
     "도원경종합대학 도원경주의학과 삼잘주의전공 졸업"
   ],
   "career": [
-    "민선1기 금성도청장",
+    "민선1기 금성도지사",
     "특급《쩝쩝이》행위로 실각",
     "전) 실론 최고인민회의 대의원 (홍매화선거구)",
     "전) 실론 국가주석 생활수석비서관",

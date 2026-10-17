@@ -29,7 +29,7 @@ on conflict do nothing;
 window.GEUMSEONG_BOARD_CONFIG = {
   supabaseUrl: 'https://실제프로젝트ID.supabase.co',
   publishableKey: 'sb_publishable_실제공개키',
-  bucket: 'news-files'
+  bucket: 'geumseong-news-files'
 };
 ```
 

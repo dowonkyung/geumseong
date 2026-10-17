@@ -6,7 +6,7 @@
 
 1. 기존에 사용하던 Supabase 프로젝트의 **SQL Editor → New query**를 엽니다.
 2. 이 저장소의 `supabase/notices.sql`을 **Raw → 전체 복사**하여 붙여 넣고 **Run**을 누릅니다.
-3. Table Editor에서 `notice_posts`, `notice_assets`, Storage에서 비공개 `notice-files` 버킷을 확인합니다.
+3. Table Editor에서 `geumseong_notice_posts`, `geumseong_notice_assets`, Storage에서 비공개 `notice-files` 버킷을 확인합니다.
 
 새 관리자 계정을 만들 필요는 없습니다. 기존 `news_admins`에 등록한 계정이 공고도 관리합니다. `schema.sql`을 다시 실행하거나 기존 테이블을 삭제하지 않습니다.
 

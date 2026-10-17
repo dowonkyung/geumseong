@@ -1,6 +1,6 @@
 -- Run after schema.sql. Existing news tables and files are not changed.
 begin;
-create table if not exists public.publication_posts (
+create table if not exists public.geumseong_publication_posts (
   id uuid primary key default gen_random_uuid(),
   board_type text not null check (board_type in ('gazette','press','briefing','facts','activity','media')),
   contact text not null default '' check (char_length(contact)<=100),
@@ -16,24 +16,24 @@ create table if not exists public.publication_posts (
   views integer not null default 0 check (views>=0)
 );
 -- Expand the category check on projects that already created these tables.
-alter table public.publication_posts drop constraint if exists publication_posts_board_type_check;
-alter table public.publication_posts add constraint publication_posts_board_type_check check (board_type in ('gazette','press','briefing','facts','activity','media'));
-create index if not exists publication_posts_published_date on public.publication_posts(status,created_at desc);
-alter table public.publication_posts enable row level security;
-grant select on public.publication_posts to anon, authenticated;
-grant insert, update, delete on public.publication_posts to authenticated;
-drop policy if exists publication_posts_read on public.publication_posts;
-drop policy if exists publication_posts_insert on public.publication_posts;
-drop policy if exists publication_posts_update on public.publication_posts;
-drop policy if exists publication_posts_delete on public.publication_posts;
-create policy publication_posts_read on public.publication_posts for select to anon,authenticated using (status='published' or (select public.is_news_admin()));
-create policy publication_posts_insert on public.publication_posts for insert to authenticated with check ((select public.is_news_admin()) and author_id=(select auth.uid()));
-create policy publication_posts_update on public.publication_posts for update to authenticated using ((select public.is_news_admin())) with check ((select public.is_news_admin()));
-create policy publication_posts_delete on public.publication_posts for delete to authenticated using ((select public.is_news_admin()));
+alter table public.geumseong_publication_posts drop constraint if exists publication_posts_board_type_check;
+alter table public.geumseong_publication_posts add constraint publication_posts_board_type_check check (board_type in ('gazette','press','briefing','facts','activity','media'));
+create index if not exists geumseong_publication_posts_published_date on public.geumseong_publication_posts(status,created_at desc);
+alter table public.geumseong_publication_posts enable row level security;
+grant select on public.geumseong_publication_posts to anon, authenticated;
+grant insert, update, delete on public.geumseong_publication_posts to authenticated;
+drop policy if exists geumseong_publication_posts_read on public.geumseong_publication_posts;
+drop policy if exists geumseong_publication_posts_insert on public.geumseong_publication_posts;
+drop policy if exists geumseong_publication_posts_update on public.geumseong_publication_posts;
+drop policy if exists geumseong_publication_posts_delete on public.geumseong_publication_posts;
+create policy geumseong_publication_posts_read on public.geumseong_publication_posts for select to anon,authenticated using (status='published' or (select public.is_news_admin()));
+create policy geumseong_publication_posts_insert on public.geumseong_publication_posts for insert to authenticated with check ((select public.is_news_admin()) and author_id=(select auth.uid()));
+create policy geumseong_publication_posts_update on public.geumseong_publication_posts for update to authenticated using ((select public.is_news_admin())) with check ((select public.is_news_admin()));
+create policy geumseong_publication_posts_delete on public.geumseong_publication_posts for delete to authenticated using ((select public.is_news_admin()));
 
-create table if not exists public.publication_assets (
+create table if not exists public.geumseong_publication_assets (
   id uuid primary key default gen_random_uuid(),
-  post_id uuid not null references public.publication_posts(id) on delete cascade,
+  post_id uuid not null references public.geumseong_publication_posts(id) on delete cascade,
   file_name text not null,
   storage_path text not null unique,
   mime text not null default 'application/octet-stream',
@@ -42,44 +42,44 @@ create table if not exists public.publication_assets (
   preview_path text,
   created_at timestamptz not null default now()
 );
-create index if not exists publication_assets_post on public.publication_assets(post_id);
-alter table public.publication_assets enable row level security;
-grant select on public.publication_assets to anon, authenticated;
-grant insert, update, delete on public.publication_assets to authenticated;
-drop policy if exists publication_assets_read on public.publication_assets;
-drop policy if exists publication_assets_write on public.publication_assets;
-create policy publication_assets_read on public.publication_assets for select to anon,authenticated using (
-  (select public.is_news_admin()) or exists(select 1 from public.publication_posts p where p.id=post_id and p.status='published')
+create index if not exists geumseong_publication_assets_post on public.geumseong_publication_assets(post_id);
+alter table public.geumseong_publication_assets enable row level security;
+grant select on public.geumseong_publication_assets to anon, authenticated;
+grant insert, update, delete on public.geumseong_publication_assets to authenticated;
+drop policy if exists geumseong_publication_assets_read on public.geumseong_publication_assets;
+drop policy if exists geumseong_publication_assets_write on public.geumseong_publication_assets;
+create policy geumseong_publication_assets_read on public.geumseong_publication_assets for select to anon,authenticated using (
+  (select public.is_news_admin()) or exists(select 1 from public.geumseong_publication_posts p where p.id=post_id and p.status='published')
 );
-create policy publication_assets_write on public.publication_assets for all to authenticated using ((select public.is_news_admin())) with check ((select public.is_news_admin()));
+create policy geumseong_publication_assets_write on public.geumseong_publication_assets for all to authenticated using ((select public.is_news_admin())) with check ((select public.is_news_admin()));
 
-insert into storage.buckets(id,name,public,file_size_limit) values ('publication-files','publication-files',false,20971520)
+insert into storage.buckets(id,name,public,file_size_limit) values ('geumseong-publication-files','geumseong-publication-files',false,20971520)
 on conflict (id) do update set public=false,file_size_limit=20971520;
-drop policy if exists publication_files_read on storage.objects;
-drop policy if exists publication_files_insert on storage.objects;
-drop policy if exists publication_files_delete on storage.objects;
-create policy publication_files_read on storage.objects for select to anon,authenticated using (
-  bucket_id='publication-files' and ((select public.is_news_admin()) or exists (
-    select 1 from public.publication_assets a join public.publication_posts p on p.id=a.post_id
+drop policy if exists geumseong_publication_files_read on storage.objects;
+drop policy if exists geumseong_publication_files_insert on storage.objects;
+drop policy if exists geumseong_publication_files_delete on storage.objects;
+create policy geumseong_publication_files_read on storage.objects for select to anon,authenticated using (
+  bucket_id='geumseong-publication-files' and ((select public.is_news_admin()) or exists (
+    select 1 from public.geumseong_publication_assets a join public.geumseong_publication_posts p on p.id=a.post_id
     where a.storage_path=name and p.status='published'
   ))
 );
-create policy publication_files_insert on storage.objects for insert to authenticated with check (
-  bucket_id='publication-files' and (select public.is_news_admin()) and split_part(name,'/',1)=(select auth.uid())::text
+create policy geumseong_publication_files_insert on storage.objects for insert to authenticated with check (
+  bucket_id='geumseong-publication-files' and (select public.is_news_admin()) and split_part(name,'/',1)=(select auth.uid())::text
 );
-create policy publication_files_delete on storage.objects for delete to authenticated using (bucket_id='publication-files' and (select public.is_news_admin()));
+create policy geumseong_publication_files_delete on storage.objects for delete to authenticated using (bucket_id='geumseong-publication-files' and (select public.is_news_admin()));
 
-create or replace function public.record_publication_view(post_uuid uuid) returns integer
+create or replace function public.geumseong_record_publication_view(post_uuid uuid) returns integer
 language plpgsql security definer set search_path = '' as $$
 declare result integer;
 begin
-  update public.publication_posts set views=views+1 where id=post_uuid and status='published' returning views into result;
+  update public.geumseong_publication_posts set views=views+1 where id=post_uuid and status='published' returning views into result;
   return result;
 end;
 $$;
-revoke all on function public.record_publication_view(uuid) from public;
-grant execute on function public.record_publication_view(uuid) to anon,authenticated;
+revoke all on function public.geumseong_record_publication_view(uuid) from public;
+grant execute on function public.geumseong_record_publication_view(uuid) to anon,authenticated;
 
 
-create index if not exists publication_posts_board_date on public.publication_posts(board_type,status,created_at desc);
+create index if not exists geumseong_publication_posts_board_date on public.geumseong_publication_posts(board_type,status,created_at desc);
 commit;

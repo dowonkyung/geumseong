@@ -12,6 +12,6 @@ if(!count)host.append(node('h4','검색된 업무정보가 없습니다.','data-
 }
 if(!query)return;
 $('#job-status').textContent='업무정보를 검색하는 중입니다.';$('#job-results').replaceChildren();
-try{await window.HeaderAuth.ready;const client=window.HeaderAuth.client;if(!client)throw Error('unavailable');const documents=[];for(let offset=0;;offset+=100){const result=await client.from('organization_directory').select('department,sections').order('department').range(offset,offset+99);if(result.error)throw result.error;documents.push(...result.data);if(result.data.length<100)break}render(documents)}
+try{await window.HeaderAuth.ready;const client=window.HeaderAuth.client;if(!client)throw Error('unavailable');const documents=[];for(let offset=0;;offset+=100){const result=await client.from('geumseong_organization_directory').select('department,sections').order('department').range(offset,offset+99);if(result.error)throw result.error;documents.push(...result.data);if(result.data.length<100)break}render(documents)}
 catch{$('#job-status').textContent='업무정보를 불러오지 못했습니다. 잠시 후 다시 검색해 주세요.';const button=node('button','다시 시도','btn-normal bg-btn-secondary medium');button.type='button';button.onclick=()=>location.reload();$('#job-results').append(button)}
 })();

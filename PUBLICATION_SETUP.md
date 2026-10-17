@@ -6,7 +6,7 @@
 
 1. 기존 Supabase 프로젝트를 열고 왼쪽 **SQL Editor → New query**를 선택합니다.
 2. 이 저장소의 **supabase/publications.sql** 전체를 복사해 붙여넣고 **Run**을 누릅니다. 기존 **supabase/schema.sql**을 실행한 프로젝트에서 사용합니다.
-3. Table Editor에 **publication_posts**, **publication_assets** 두 테이블이 생기면 완료입니다. 비공개 **publication-files** 버킷과 접근 정책도 함께 만들어집니다.
+3. Table Editor에 **geumseong_publication_posts**, **geumseong_publication_assets** 두 테이블이 생기면 완료입니다. 비공개 **publication-files** 버킷과 접근 정책도 함께 만들어집니다.
 4. 홈페이지를 새로고침하고 헤더에서 관리자 로그인 후 게시판의 **글쓰기**를 이용합니다.
 
 ## 페이지와 입력 항목

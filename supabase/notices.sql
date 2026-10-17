@@ -1,6 +1,6 @@
 -- Run after schema.sql. Existing news tables and files are not changed.
 begin;
-create table if not exists public.notice_posts (
+create table if not exists public.geumseong_notice_posts (
   id uuid primary key default gen_random_uuid(),
   board_type text not null check (board_type in ('notice','bid','legislation','general')),
   notice_kind text not null check (char_length(notice_kind) between 1 and 100),
@@ -18,22 +18,22 @@ create table if not exists public.notice_posts (
   created_at timestamptz not null default now(),
   views integer not null default 0 check (views>=0)
 );
-create index if not exists notice_posts_published_date on public.notice_posts(status,created_at desc);
-alter table public.notice_posts enable row level security;
-grant select on public.notice_posts to anon, authenticated;
-grant insert, update, delete on public.notice_posts to authenticated;
-drop policy if exists notice_posts_read on public.notice_posts;
-drop policy if exists notice_posts_insert on public.notice_posts;
-drop policy if exists notice_posts_update on public.notice_posts;
-drop policy if exists notice_posts_delete on public.notice_posts;
-create policy notice_posts_read on public.notice_posts for select to anon,authenticated using (status='published' or (select public.is_news_admin()));
-create policy notice_posts_insert on public.notice_posts for insert to authenticated with check ((select public.is_news_admin()) and author_id=(select auth.uid()));
-create policy notice_posts_update on public.notice_posts for update to authenticated using ((select public.is_news_admin())) with check ((select public.is_news_admin()));
-create policy notice_posts_delete on public.notice_posts for delete to authenticated using ((select public.is_news_admin()));
+create index if not exists geumseong_notice_posts_published_date on public.geumseong_notice_posts(status,created_at desc);
+alter table public.geumseong_notice_posts enable row level security;
+grant select on public.geumseong_notice_posts to anon, authenticated;
+grant insert, update, delete on public.geumseong_notice_posts to authenticated;
+drop policy if exists geumseong_notice_posts_read on public.geumseong_notice_posts;
+drop policy if exists geumseong_notice_posts_insert on public.geumseong_notice_posts;
+drop policy if exists geumseong_notice_posts_update on public.geumseong_notice_posts;
+drop policy if exists geumseong_notice_posts_delete on public.geumseong_notice_posts;
+create policy geumseong_notice_posts_read on public.geumseong_notice_posts for select to anon,authenticated using (status='published' or (select public.is_news_admin()));
+create policy geumseong_notice_posts_insert on public.geumseong_notice_posts for insert to authenticated with check ((select public.is_news_admin()) and author_id=(select auth.uid()));
+create policy geumseong_notice_posts_update on public.geumseong_notice_posts for update to authenticated using ((select public.is_news_admin())) with check ((select public.is_news_admin()));
+create policy geumseong_notice_posts_delete on public.geumseong_notice_posts for delete to authenticated using ((select public.is_news_admin()));
 
-create table if not exists public.notice_assets (
+create table if not exists public.geumseong_notice_assets (
   id uuid primary key default gen_random_uuid(),
-  post_id uuid not null references public.notice_posts(id) on delete cascade,
+  post_id uuid not null references public.geumseong_notice_posts(id) on delete cascade,
   file_name text not null,
   storage_path text not null unique,
   mime text not null default 'application/octet-stream',
@@ -42,44 +42,44 @@ create table if not exists public.notice_assets (
   preview_path text,
   created_at timestamptz not null default now()
 );
-create index if not exists notice_assets_post on public.notice_assets(post_id);
-alter table public.notice_assets enable row level security;
-grant select on public.notice_assets to anon, authenticated;
-grant insert, update, delete on public.notice_assets to authenticated;
-drop policy if exists notice_assets_read on public.notice_assets;
-drop policy if exists notice_assets_write on public.notice_assets;
-create policy notice_assets_read on public.notice_assets for select to anon,authenticated using (
-  (select public.is_news_admin()) or exists(select 1 from public.notice_posts p where p.id=post_id and p.status='published')
+create index if not exists geumseong_notice_assets_post on public.geumseong_notice_assets(post_id);
+alter table public.geumseong_notice_assets enable row level security;
+grant select on public.geumseong_notice_assets to anon, authenticated;
+grant insert, update, delete on public.geumseong_notice_assets to authenticated;
+drop policy if exists geumseong_notice_assets_read on public.geumseong_notice_assets;
+drop policy if exists geumseong_notice_assets_write on public.geumseong_notice_assets;
+create policy geumseong_notice_assets_read on public.geumseong_notice_assets for select to anon,authenticated using (
+  (select public.is_news_admin()) or exists(select 1 from public.geumseong_notice_posts p where p.id=post_id and p.status='published')
 );
-create policy notice_assets_write on public.notice_assets for all to authenticated using ((select public.is_news_admin())) with check ((select public.is_news_admin()));
+create policy geumseong_notice_assets_write on public.geumseong_notice_assets for all to authenticated using ((select public.is_news_admin())) with check ((select public.is_news_admin()));
 
-insert into storage.buckets(id,name,public,file_size_limit) values ('notice-files','notice-files',false,20971520)
+insert into storage.buckets(id,name,public,file_size_limit) values ('geumseong-notice-files','geumseong-notice-files',false,20971520)
 on conflict (id) do update set public=false,file_size_limit=20971520;
-drop policy if exists notice_files_read on storage.objects;
-drop policy if exists notice_files_insert on storage.objects;
-drop policy if exists notice_files_delete on storage.objects;
-create policy notice_files_read on storage.objects for select to anon,authenticated using (
-  bucket_id='notice-files' and ((select public.is_news_admin()) or exists (
-    select 1 from public.notice_assets a join public.notice_posts p on p.id=a.post_id
+drop policy if exists geumseong_notice_files_read on storage.objects;
+drop policy if exists geumseong_notice_files_insert on storage.objects;
+drop policy if exists geumseong_notice_files_delete on storage.objects;
+create policy geumseong_notice_files_read on storage.objects for select to anon,authenticated using (
+  bucket_id='geumseong-notice-files' and ((select public.is_news_admin()) or exists (
+    select 1 from public.geumseong_notice_assets a join public.geumseong_notice_posts p on p.id=a.post_id
     where a.storage_path=name and p.status='published'
   ))
 );
-create policy notice_files_insert on storage.objects for insert to authenticated with check (
-  bucket_id='notice-files' and (select public.is_news_admin()) and split_part(name,'/',1)=(select auth.uid())::text
+create policy geumseong_notice_files_insert on storage.objects for insert to authenticated with check (
+  bucket_id='geumseong-notice-files' and (select public.is_news_admin()) and split_part(name,'/',1)=(select auth.uid())::text
 );
-create policy notice_files_delete on storage.objects for delete to authenticated using (bucket_id='notice-files' and (select public.is_news_admin()));
+create policy geumseong_notice_files_delete on storage.objects for delete to authenticated using (bucket_id='geumseong-notice-files' and (select public.is_news_admin()));
 
-create or replace function public.record_notice_view(post_uuid uuid) returns integer
+create or replace function public.geumseong_record_notice_view(post_uuid uuid) returns integer
 language plpgsql security definer set search_path = '' as $$
 declare result integer;
 begin
-  update public.notice_posts set views=views+1 where id=post_uuid and status='published' returning views into result;
+  update public.geumseong_notice_posts set views=views+1 where id=post_uuid and status='published' returning views into result;
   return result;
 end;
 $$;
-revoke all on function public.record_notice_view(uuid) from public;
-grant execute on function public.record_notice_view(uuid) to anon,authenticated;
+revoke all on function public.geumseong_record_notice_view(uuid) from public;
+grant execute on function public.geumseong_record_notice_view(uuid) to anon,authenticated;
 
 
-create index if not exists notice_posts_board_date on public.notice_posts(board_type,status,created_at desc);
+create index if not exists geumseong_notice_posts_board_date on public.geumseong_notice_posts(board_type,status,created_at desc);
 commit;

@@ -1,6 +1,6 @@
 # 포토갤러리 연결
 
-1. Supabase 프로젝트의 SQL Editor에서 `supabase/photos.sql` 전체를 붙여 넣고 Run을 누르세요. 기존 새소식과 보도자료 테이블은 변경하지 않습니다. `photo_posts`, `photo_assets`, 비공개 `photo-files` 버킷과 정책이 생성됩니다.
+1. Supabase 프로젝트의 SQL Editor에서 `supabase/photos.sql` 전체를 붙여 넣고 Run을 누르세요. 기존 새소식과 보도자료 테이블은 변경하지 않습니다. `geumseong_photo_posts`, `geumseong_photo_assets`, 비공개 `photo-files` 버킷과 정책이 생성됩니다.
 2. `photo.html`에서 헤더의 로그인으로 기존 관리자 계정에 로그인하세요.
 3. 글쓰기에서 제목, 촬영자, 촬영일, 사진 설명을 입력하고 ‘사진 추가’로 여러 장을 선택한 뒤 공개 게시를 누르세요. 관리자만 작성·수정·삭제할 수 있습니다.
 

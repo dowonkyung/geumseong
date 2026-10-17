@@ -1,18 +1,18 @@
 -- Run after schema.sql. Directory information is public; only existing admins may edit.
 begin;
-create table if not exists public.organization_directory (
+create table if not exists public.geumseong_organization_directory (
  department text primary key check(char_length(department) between 1 and 100),
  sections jsonb not null default '[]' check(jsonb_typeof(sections)='array'),
  version integer not null default 1 check(version>0),
  updated_at timestamptz not null default now()
 );
-alter table public.organization_directory enable row level security;
-revoke all on public.organization_directory from anon,authenticated;
-grant select on public.organization_directory to anon,authenticated;
-drop policy if exists organization_directory_read on public.organization_directory;
-create policy organization_directory_read on public.organization_directory for select to anon,authenticated using(true);
+alter table public.geumseong_organization_directory enable row level security;
+revoke all on public.geumseong_organization_directory from anon,authenticated;
+grant select on public.geumseong_organization_directory to anon,authenticated;
+drop policy if exists geumseong_organization_directory_read on public.geumseong_organization_directory;
+create policy geumseong_organization_directory_read on public.geumseong_organization_directory for select to anon,authenticated using(true);
 
-create or replace function public.save_organization_directory(p_department text,p_sections jsonb,p_expected_version integer) returns integer
+create or replace function public.geumseong_save_organization_directory(p_department text,p_sections jsonb,p_expected_version integer) returns integer
 language plpgsql security definer set search_path='' as $$
 declare section jsonb; member jsonb; total integer=0; result integer;
 begin
@@ -29,13 +29,13 @@ begin
   end loop;
  end loop;
  if p_expected_version=0 then
-  insert into public.organization_directory(department,sections) values(p_department,p_sections) on conflict do nothing returning version into result;
+  insert into public.geumseong_organization_directory(department,sections) values(p_department,p_sections) on conflict do nothing returning version into result;
  else
-  update public.organization_directory set sections=p_sections,version=version+1,updated_at=now() where department=p_department and version=p_expected_version returning version into result;
+  update public.geumseong_organization_directory set sections=p_sections,version=version+1,updated_at=now() where department=p_department and version=p_expected_version returning version into result;
  end if;
  if result is null then raise exception '다른 관리자가 목록을 변경했습니다. 새로고침 후 다시 편집해 주세요.';end if;
  return result;
 end $$;
-revoke all on function public.save_organization_directory(text,jsonb,integer) from public,anon;
-grant execute on function public.save_organization_directory(text,jsonb,integer) to authenticated;
+revoke all on function public.geumseong_save_organization_directory(text,jsonb,integer) from public,anon;
+grant execute on function public.geumseong_save_organization_directory(text,jsonb,integer) to authenticated;
 commit;

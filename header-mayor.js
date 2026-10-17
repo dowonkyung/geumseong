@@ -32,7 +32,7 @@ document.querySelectorAll('[data-zoom]').forEach(a=>a.onclick=e=>{e.preventDefau
 function headerSearch(){const input=document.querySelector('#applyTotalSearchTop'),q=input.value.trim();if(!q){input.focus();return}location.href='search.html?q='+encodeURIComponent(q)}
 document.querySelector('.header-search-btn').onclick=e=>{e.preventDefault();headerSearch()};document.querySelector('#applyTotalSearchTop').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();headerSearch()}};
 const mayor=window.GEUMSEONG_MAYOR,section=document.querySelector('.mayor-section');
-document.querySelector('#mayor-heading').textContent=`금성도청장 ${mayor.name}입니다.`;
+document.querySelector('#mayor-heading').textContent=`금성도지사 ${mayor.name}입니다.`;
 const greeting=document.querySelector('#mayor-greeting');mayor.greeting.forEach((line,i)=>{if(i)greeting.append(document.createElement('br'));greeting.append(document.createTextNode(line))});
 document.querySelector('#mayor-office').textContent=mayor.name+' 도지사실';
 section.style.setProperty('--mayor-portrait',`url("${mayor.portrait}")`);
