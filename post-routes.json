@@ -57,9 +57,13 @@
       "active": []
     },
     "photo": {
-      "next": 1,
-      "posts": {},
-      "active": []
+      "next": 2,
+      "posts": {
+        "6c4bed1e-05ed-4b12-890b-d32a8c96c42d": 1
+      },
+      "active": [
+        "6c4bed1e-05ed-4b12-890b-d32a8c96c42d"
+      ]
     },
     "video": {
       "next": 1,
