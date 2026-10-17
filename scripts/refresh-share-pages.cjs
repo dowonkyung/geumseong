@@ -28,7 +28,16 @@ read('video_posts','id,title,created_at,youtube_id,published_on').then(rs=>rs.ma
 const assetGroups=await Promise.all(['news','notice','publication','photo'].map(async group=>({bucket:bucketPrefix+group+'-files',rows:await read(group+'_assets','post_id,storage_path,kind,mime,file_name,created_at')})));
 const assets=new Map(assetGroups.map(group=>[group.bucket,group.rows])),posts=groups.flat().filter(row=>pages.boards.includes(row.board_type)&&/^[0-9a-f-]{36}$/i.test(row.id));
 for(const row of posts)row.share_image=await previewImage(row,assets.get(row.bucket)||[]);
-const registryFile=path.join(root,'post-routes.json'),civilFile=path.join(root,'civil-board/routes.json'),previous=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):null,civil=fs.existsSync(civilFile)?JSON.parse(fs.readFileSync(civilFile,'utf8')):null,registry=pages.assign(previous,posts,civil),result=pages.build(root,posts,registry,origin,site);
+const registryFile=path.join(root,'post-routes.json'),civilFile=path.join(root,'civil-board/routes.json'),previous=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFile,'utf8')):null,civil=fs.existsSync(civilFile)?JSON.parse(fs.readFileSync(civilFile,'utf8')):null,registry=pages.assign(previous,[],civil);
+let serverReady=true,serverRows=[];
+for(let offset=0;;offset+=1000){const r=await client.rpc('public_post_routes',{p_site:site}).range(offset,offset+999);if(r.error){if(['PGRST202','42883'].includes(r.error.code)){serverReady=false;break}throw Error('Post numbering: '+r.error.message)}serverRows.push(...r.data);if(r.data.length<1000)break}
+if(serverReady){
+ for(const row of serverRows){const g=registry.boards[row.board],n=Number(row.number);if(!g||!Number.isSafeInteger(n)||n<1)throw Error('Invalid server route');const owner=Object.keys(g.posts).find(id=>g.posts[id]===n);if(owner&&owner!==row.post_id)throw Error('Route number conflict');if(g.posts[row.post_id]&&g.posts[row.post_id]!==n)throw Error('Existing route changed');g.posts[row.post_id]=n;g.next=Math.max(g.next,n+1)}
+ const missing=posts.filter(row=>!serverRows.some(route=>route.board===row.board_type&&route.post_id===row.id));
+ if(missing.length)throw Error('Published post has no server route; rerun instant-post-numbers.sql');
+ for(const key of pages.boards)registry.boards[key].active=posts.filter(row=>row.board_type===key).map(row=>row.id);
+}else{const fallbackRegistry=pages.assign(previous,posts,civil);Object.assign(registry,fallbackRegistry)}
+const result=pages.build(root,posts,registry,origin,site);
 for(const [file,html]of result.legacy)files.set(file,html);files.set('manifest.json',JSON.stringify(result.manifest,null,2)+'\n');
 const destination=path.join(root,'share'),stage=path.join(root,'.share-stage');fs.rmSync(stage,{recursive:true,force:true});fs.mkdirSync(stage,{recursive:true});for(const [name,content]of files){const file=path.join(stage,name);fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,content)}fs.rmSync(destination,{recursive:true,force:true});fs.renameSync(stage,destination);console.log('Post routes and previews: '+Object.keys(result.manifest).length);
 }

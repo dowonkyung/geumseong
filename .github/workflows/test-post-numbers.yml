@@ -1,0 +1,37 @@
+name: Validate immediate post numbers
+on:
+  push:
+    paths:
+      - 'supabase/instant-post-numbers.sql'
+      - 'scripts/test-post-number-*.sql'
+      - '.github/workflows/test-post-numbers.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test-only
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGPASSWORD: test-only
+      PGHOST: localhost
+      PGUSER: postgres
+      PGDATABASE: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - run: psql -v ON_ERROR_STOP=1 -f scripts/test-post-number-fixture.sql
+      - run: psql -v ON_ERROR_STOP=1 -f supabase/instant-post-numbers.sql
+      - run: psql -v ON_ERROR_STOP=1 -f scripts/test-post-number-checks.sql
+      - name: Concurrent publication
+        run: |
+          seq 1 20 | xargs -P 8 -I{} psql -v ON_ERROR_STOP=1 -c "insert into community_posts(board_type) values('praise')" > /dev/null
+          psql -v ON_ERROR_STOP=1 -c "do \$\$ begin if (select count(*) from public_post_routes('angangjin') where board='praise')<>20 or (select max(number) from public_post_routes('angangjin') where board='praise')<>20 then raise exception 'Concurrent numbers failed';end if;end \$\$;"
+      - name: Migration can run twice
+        run: psql -v ON_ERROR_STOP=1 -f supabase/instant-post-numbers.sql
