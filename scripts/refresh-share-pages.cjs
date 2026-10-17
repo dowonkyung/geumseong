@@ -13,12 +13,13 @@ rows('geumseong_news_posts','id,title').then(rs=>rs.map(r=>({...r,board_type:'ne
 rows('geumseong_notice_posts','id,title,board_type'),
 rows('geumseong_publication_posts','id,title,board_type,thumbnail_path').then(rs=>rs.map(r=>({...r,bucket:'geumseong-publication-files'}))),
 rows('geumseong_photo_posts','id,title,thumbnail_path').then(rs=>rs.map(r=>({...r,board_type:'photo',bucket:'geumseong-photo-files'}))),
-rows('geumseong_community_posts','id,title,board_type',false)
+rows('geumseong_community_posts','id,title,board_type,created_at',false)
 ]);
+const civilRegistry=require('./build-civil-routes.cjs').build(root,groups.flat(),origin,"금성도",fallback,"잘먹고 잘살고 잘먹고사는 인민의 도시, 금성도 금성도입니다.");
 for(const row of groups.flat()){if(!/^[a-z-]+$/.test(row.board_type)||! /^[0-9a-f-]{36}$/i.test(row.id))continue;
 const imageUrl=row.thumbnail_path?await image(row.bucket,row.thumbnail_path):fallback;
-const route=row.board_type+'/'+row.id,share='/share/'+route+'/',target='/'+row.board_type+'.html?id='+encodeURIComponent(row.id),title=row.title+' | 금성도',description='잘먹고 잘살고 잘먹고사는 인민의 도시, 금성도 금성도입니다.';
-manifest[route]=share;
+const route=row.board_type+'/'+row.id,share='/share/'+route+'/',target=row.board_type==='civil-board'?'/civil-board/'+civilRegistry.posts[row.id]+'/':'/'+row.board_type+'.html?id='+encodeURIComponent(row.id),title=row.title+' | 금성도',description='잘먹고 잘살고 잘먹고사는 인민의 도시, 금성도 금성도입니다.';
+manifest[route]=row.board_type==='civil-board'?'/civil-board/'+civilRegistry.posts[row.id]+'/':share;
 files.set(route+'/index.html','<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(title)+'</title><meta name="description" content="'+escape(description)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+escape(title)+'"><meta property="og:description" content="'+escape(description)+'"><meta property="og:image" content="'+escape(imageUrl)+'"><meta property="og:url" content="'+origin+share+'"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="'+escape(title)+'"><meta name="twitter:image" content="'+escape(imageUrl)+'"><link rel="canonical" href="'+origin+share+'"><script src="/share-redirect.js" defer></script></head><body><h1>'+escape(row.title)+'</h1><a data-post-link href="'+target+'">게시글 보기</a></body></html>');
 }
 files.set('manifest.json',JSON.stringify(manifest,null,2)+'\n');
