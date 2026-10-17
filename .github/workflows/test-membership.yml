@@ -1,0 +1,36 @@
+name: Validate membership approval
+on:
+  push:
+    paths:
+      - 'supabase/membership-approval.sql'
+      - 'scripts/test-membership-*.sql'
+      - '.github/workflows/test-membership.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  postgres:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test-only
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGPASSWORD: test-only
+      PGHOST: localhost
+      PGUSER: postgres
+      PGDATABASE: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - run: node --check header-auth.js
+      - run: psql -v ON_ERROR_STOP=1 -f scripts/test-membership-fixture.sql
+      - run: psql -v ON_ERROR_STOP=1 -f supabase/membership-approval.sql
+      - run: psql -v ON_ERROR_STOP=1 -f scripts/test-membership-checks.sql
+      - name: Migration can run twice without changing approval status
+        run: |
+          psql -v ON_ERROR_STOP=1 -f supabase/membership-approval.sql
+          psql -v ON_ERROR_STOP=1 -c "do \$\$ begin if (select status from membership_requests where user_id='11111111-1111-1111-1111-111111111111')<>'rejected' then raise exception 'Migration reset decision';end if;end \$\$;"

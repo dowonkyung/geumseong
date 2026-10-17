@@ -1,0 +1,13 @@
+create role anon;
+create role authenticated;
+create schema auth;
+create table auth.users(id uuid primary key default gen_random_uuid(),email text,raw_user_meta_data jsonb not null default '{}');
+create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
+grant usage on schema auth to authenticated,anon;
+grant execute on function auth.uid() to authenticated,anon;
+create table public.news_admins(user_id uuid primary key references auth.users(id));
+create function public.is_news_admin() returns boolean language sql stable security definer set search_path='' as $$select exists(select 1 from public.news_admins where user_id=auth.uid())$$;
+revoke all on function public.is_news_admin() from public;
+grant execute on function public.is_news_admin() to authenticated,anon;
+insert into auth.users(id,email) values('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa','admin@example.test');
+insert into public.news_admins values('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa');
