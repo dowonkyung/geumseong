@@ -15,6 +15,7 @@ const previous=fs.existsSync(registryFile)?JSON.parse(fs.readFileSync(registryFi
 const registry=assign(previous,rows),template=fs.readFileSync(path.join(root,'civil-board.html'),'utf8');
 function page(row){
 let html=template.replace('<head>','<head><base href="/">');
+const pagePath=row?'/civil-board/'+registry.posts[row.id]+'/':'/civil-board/';html=html.replace('class="skip" href="#main"','class="skip" href="'+pagePath+'#main"');
 if(!row)return html;
 const n=registry.posts[row.id],url=origin+'/civil-board/'+n+'/',title=row.title+' | '+siteName;
 html=html.replace(/<body\b/,'<body data-civil-post-id="'+row.id+'" data-civil-post-number="'+n+'"');
@@ -26,7 +27,7 @@ html=html.replace(/<link rel="canonical"[^>]*>/g,'');html=html.replace('</head>'
 fs.mkdirSync(destination,{recursive:true});fs.writeFileSync(path.join(destination,'index.html'),page(null));
 const activeNumbers=new Set(registry.active.map(id=>String(registry.posts[id])));
 for(const name of fs.readdirSync(destination))if(/^[1-9]\d*$/.test(name)&&!activeNumbers.has(name))fs.rmSync(path.join(destination,name),{recursive:true,force:true});
-for(const row of rows.filter(r=>registry.active.includes(r.id))){const folder=path.join(destination,String(registry.posts[row.id]));fs.mkdirSync(folder,{recursive:true});fs.writeFileSync(path.join(folder,'index.html'),page(row))}
+for(const row of rows.filter(r=>r.board_type==='civil-board'&&registry.active.includes(r.id))){const folder=path.join(destination,String(registry.posts[row.id]));fs.mkdirSync(folder,{recursive:true});fs.writeFileSync(path.join(folder,'index.html'),page(row))}
 fs.writeFileSync(registryFile,JSON.stringify(registry,null,2)+'\n');return registry;
 }
 module.exports={assign,build};

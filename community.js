@@ -24,7 +24,7 @@ section.setAttribute('aria-label','담당 부서 답변');message.setAttribute('
 let editor=null,department=null,body=null,save=null,cancel=null,editingId=null,busy=false,drafts=null,note=null;
 function snapshot(){return {department:department.value,body:body.value,editingId}}
 function persist(){if(!drafts)return;const value=snapshot(),hasText=Boolean(value.department||value.body);const ok=hasText?drafts.write(value):drafts.clear();note.textContent=ok?'답변 초안은 이 기기·브라우저에 자동 저장됩니다.':'초안을 자동 저장하지 못했습니다. 페이지를 이동하기 전에 답변을 등록해 주세요.'}
-function reset(clear=true){if(clear)drafts?.clear();editingId=null;department.value='';body.value='';save.textContent='답변 등록';cancel.hidden=true;if(note)note.textContent='답변 초안은 이 기기·브라우저에 자동 저장됩니다.'}
+function reset(clear=true){if(clear)drafts?.clear();editingId=null;department.value='';body.value='';save.textContent='답변 등록';cancel.hidden=true;if(note)note.textContent=drafts?'답변 초안은 이 기기·브라우저에 자동 저장됩니다.':'이 브라우저에서는 답변 초안을 저장할 수 없습니다.'}
 if(admin()){
 editor=el('form',undefined,'community-reply-editor');
 const fields=el('div',undefined,'editor-fields'),deptLabel=el('label','담당 부서'),bodyLabel=el('label','답변 내용');

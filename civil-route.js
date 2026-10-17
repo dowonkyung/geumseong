@@ -7,7 +7,7 @@ const api={id:params.get(write?'edit':'id'),postUrl,boardUrl:key=>key==='civil-b
 api.ready=(async()=>{if(!isCivil)return api;try{const response=await fetch('/civil-board/routes.json',{cache:'no-store'});if(response.ok){const registry=await response.json();routes=registry.posts||{};active=new Set(registry.active||[])}}catch{}
 const number=/^\/civil-board\/([1-9]\d*)\/?$/.exec(location.pathname)?.[1];
 if(number){api.id=document.body.dataset.civilPostId||Object.keys(routes).find(id=>active.has(id)&&String(routes[id])===number)||null}
-if(!write&&api.id){const target=postUrl(board,api.id);if(target.startsWith('/civil-board/')){base();history.replaceState(null,'',target+location.hash)}}
+if(!write&&api.id){const target=postUrl(board,api.id);if(target.startsWith('/civil-board/')){base();history.replaceState(null,'',target+location.hash);document.querySelector('a.skip')?.setAttribute('href',target+'#main')}}
 return api})();
 window.CivilRoute=api;
 })();
