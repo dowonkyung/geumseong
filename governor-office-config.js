@@ -24,10 +24,10 @@ window.GEUMSEONG_NAV_MENU={
 };
 window.GEUMSEONG_OFFICE={
   "name": "신제희",
-  "portrait": "assets/mayors/shin-jehee.png",
+  "portrait": "assets/governors/shin-jehee.png",
   "banners": [
     {
-      "image": "assets/mayors/shin-jehee.png",
+      "image": "assets/governors/shin-jehee.png",
       "title": "금성도지사 신제희입니다.",
       "position": "center 32%",
       "page": "greeting"
@@ -73,17 +73,17 @@ window.GEUMSEONG_OFFICE={
   "gallery": [
     {
       "type": "photo",
-      "image": "assets/mayors/song-eunseok.png",
+      "image": "assets/governors/song-eunseok.png",
       "title": "신제희 금성도지사",
       "page": "profile"
     }
   ],
   "greetingTitle": "금성도지사 신제희입니다.",
   "greetingSubtitle": "존경하고 사랑하는 금성도민 동지들!",
-  "greetingPortrait": "assets/mayors/greeting-eunseo.png",
+  "greetingPortrait": "assets/governors/greeting-eunseo.png",
   "greetingDate": "2026년 10월 8일",
   "greetingSign": "신 제 희",
-  "profilePortrait": "assets/mayors/profile-song.png",
+  "profilePortrait": "assets/governors/profile-song.png",
   "profileTitle": "신제희 금성도지사",
   "education": [
     "금성고 졸업",

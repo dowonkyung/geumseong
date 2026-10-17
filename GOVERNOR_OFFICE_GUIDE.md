@@ -1,10 +1,10 @@
 # 열린도지사실 수정 방법
 
-주소는 `mayor.html`입니다. 홈페이지의 도지사실·공약과 실천·포토갤러리·영상갤러리 링크와 연결됩니다.
+주소는 `governor.html`입니다. 홈페이지의 도지사실·공약과 실천·포토갤러리·영상갤러리 링크와 연결됩니다.
 
 ## 사진과 문구
 
-`mayor-office-config.js`의 `GEUMSEONG_OFFICE`를 수정하세요.
+`governor-office-config.js`의 `GEUMSEONG_OFFICE`를 수정하세요.
 
 - `banners`: 메인 사진 배너. `image`는 파일 경로, `title`은 하단 제목, `position`은 사진에서 보일 위치입니다. 가로 1920×740px 사진을 권장합니다. `page`로 도지사실 내부 화면을 지정하거나 `href`로 외부 주소를 지정하세요.
 - `portrait`: 인사말·프로필 사진 경로입니다.
@@ -20,6 +20,6 @@
 
 ## 메뉴
 
-같은 파일의 `GEUMSEONG_NAV_MENU`에 메뉴 구조가 있습니다. 인사말·프로필·취임사 등은 `mayor.html#profile` 형태의 내부 주소로 이동합니다. 메뉴를 추가할 때는 `mayor-office.js`의 `routes`와 화면 처리도 함께 추가하세요.
+같은 파일의 `GEUMSEONG_NAV_MENU`에 메뉴 구조가 있습니다. 인사말·프로필·취임사 등은 `governor.html#profile` 형태의 내부 주소로 이동합니다. 메뉴를 추가할 때는 `governor-office.js`의 `routes`와 화면 처리도 함께 추가하세요.
 
 배너는 5초마다 전환되고 이전·다음·일시정지·썸네일 선택이 가능합니다. 움직임 줄이기를 설정한 사용자는 처음에 자동 재생이 정지됩니다.

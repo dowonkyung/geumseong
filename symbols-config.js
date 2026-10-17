@@ -79,7 +79,7 @@ window.GEUMSEONG_SYMBOLS={
     "title": "도정구호",
     "description": "",
     "image": "assets/slogan.png",
-    "fallback": "assets/mayor-slogan.svg",
+    "fallback": "assets/governor-slogan.svg",
     "alt": "금성도 도정구호",
     "details": [
       "도민과 함께하는 금성도의 도정구호입니다."

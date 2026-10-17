@@ -1170,7 +1170,7 @@ header .drop-menu .logout span{
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background: url("assets/reference/mayor_bg.png") no-repeat center/cover;
+  background: url("assets/reference/governor_bg.png") no-repeat center/cover;
   overflow: hidden;
   position: relative;
 }
@@ -1236,7 +1236,7 @@ header .drop-menu .logout span{
   content: "";
   width: 1116px;
   height: 710px;
-  background: url("assets/reference/mayor_bg1.png") no-repeat 0 0;
+  background: url("assets/reference/governor_bg1.png") no-repeat 0 0;
   position: absolute;
   top: 0;
   left: -300px;
@@ -1248,13 +1248,13 @@ header .drop-menu .logout span{
 @media only screen and (max-width: 63.99em){.mayor-section .inner::after{
     width: 100%;
     height: 100%;
-    background: url("assets/reference/mayor_bg_t.png") no-repeat 45% -17%;
+    background: url("assets/reference/governor_bg_t.png") no-repeat 45% -17%;
     left: 0;
   }
 }
 @media only screen and (max-width: 47.99em){.mayor-section .inner::after{
     display: none;
-    background: url("assets/reference/mayor_bg_m.png") no-repeat 0 0;
+    background: url("assets/reference/governor_bg_m.png") no-repeat 0 0;
   }
 }
 .mayor-section .top{
@@ -1392,7 +1392,7 @@ header .drop-menu .logout span{
     position: absolute;
     top: 10px;
     left: -16px;
-    background: url("assets/reference/mayor_bg_m.png") no-repeat 0 0;
+    background: url("assets/reference/governor_bg_m.png") no-repeat 0 0;
   }
 }
 .mayor-section .top .mayor-info::before{
@@ -1573,16 +1573,16 @@ header .drop-menu .logout span{
   }
 }
 .mayor-section .top .mayor-info ul li:nth-child(1) a::before{
-  background-image: url("assets/reference/ico_mayor1.svg");
+  background-image: url("assets/reference/ico_governor1.svg");
 }
 .mayor-section .top .mayor-info ul li:nth-child(2) a::before{
-  background-image: url("assets/reference/ico_mayor2.svg");
+  background-image: url("assets/reference/ico_governor2.svg");
 }
 .mayor-section .top .mayor-info ul li:nth-child(3) a::before{
-  background-image: url("assets/reference/ico_mayor3.svg");
+  background-image: url("assets/reference/ico_governor3.svg");
 }
 .mayor-section .top .mayor-info ul li:nth-child(4) a::before{
-  background-image: url("assets/reference/ico_mayor9.svg");
+  background-image: url("assets/reference/ico_governor9.svg");
 }
 .mayor-section .mayor-service{
   width: 100%;
@@ -1625,19 +1625,19 @@ header .drop-menu .logout span{
   }
 }
 .mayor-section .mayor-service ul li:nth-child(1){
-  background-image: url("assets/reference/ico_mayor4.svg");
+  background-image: url("assets/reference/ico_governor4.svg");
 }
 .mayor-section .mayor-service ul li:nth-child(2){
-  background-image: url("assets/reference/ico_mayor5.svg");
+  background-image: url("assets/reference/ico_governor5.svg");
 }
 .mayor-section .mayor-service ul li:nth-child(3){
-  background-image: url("assets/reference/ico_mayor6.svg");
+  background-image: url("assets/reference/ico_governor6.svg");
 }
 .mayor-section .mayor-service ul li:nth-child(4){
-  background-image: url("assets/reference/ico_mayor7.svg");
+  background-image: url("assets/reference/ico_governor7.svg");
 }
 .mayor-section .mayor-service ul li:nth-child(5){
-  background-image: url("assets/reference/ico_mayor8.svg");
+  background-image: url("assets/reference/ico_governor8.svg");
 }
 .mayor-section .mayor-service ul li span{
   font-size: 15px;

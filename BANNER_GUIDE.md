@@ -30,11 +30,11 @@ banners: [
 같은 `site-content.js`에서 두 값을 바꿉니다. 현재 이미지 비율은 **1400 × 142**이며, 이 비율로 만들면 기존 배치가 유지됩니다.
 
 ```js
-slogan: 'assets/my-mayor-slogan.svg',
+slogan: 'assets/my-governor-slogan.svg',
 sloganAlt: '슬로건에 적힌 문구',
 ```
 
-도지사 사진은 `portrait`, 이름은 `name`, 인사말은 `greeting`에서 수정할 수 있습니다. `portrait`는 데스크톱용이며, 태블릿 이하에서는 기존 배경과 인물이 합쳐진 `assets/reference/mayor_bg_t.png` 등의 이미지를 사용합니다.
+도지사 사진은 `portrait`, 이름은 `name`, 인사말은 `greeting`에서 수정할 수 있습니다. `portrait`는 데스크톱용이며, 태블릿 이하에서는 기존 배경과 인물이 합쳐진 `assets/reference/governor_bg_t.png` 등의 이미지를 사용합니다.
 
 ## 알림 목록 오른쪽 배너
 
