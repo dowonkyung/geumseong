@@ -1,6 +1,6 @@
 // 열린도지사실 메뉴와 사진·본문 설정입니다.
 window.GEUMSEONG_NAV_MENU={
-  "송은석입니다": {
+  "신제희입니다": {
     "인사말": [],
     "프로필": [],
     "취임사": []
@@ -23,12 +23,12 @@ window.GEUMSEONG_NAV_MENU={
   }
 };
 window.GEUMSEONG_OFFICE={
-  "name": "송은석",
+  "name": "신제희",
   "portrait": "assets/mayors/song-eunseok.png",
   "banners": [
     {
       "image": "assets/mayors/song-eunseok.png",
-      "title": "금성도지사 송은석입니다.",
+      "title": "금성도지사 신제희입니다.",
       "position": "center 32%",
       "page": "greeting"
     },
@@ -51,7 +51,7 @@ window.GEUMSEONG_OFFICE={
   "profile": [
     [
       "성명",
-      "송은석 宋恩奭"
+      "신제희"
     ],
     [
       "대수",
@@ -74,17 +74,17 @@ window.GEUMSEONG_OFFICE={
     {
       "type": "photo",
       "image": "assets/mayors/song-eunseok.png",
-      "title": "송은석 금성도지사",
+      "title": "신제희 금성도지사",
       "page": "profile"
     }
   ],
-  "greetingTitle": "금성도지사 송은석입니다.",
+  "greetingTitle": "금성도지사 신제희입니다.",
   "greetingSubtitle": "존경하고 사랑하는 금성도민 동지들!",
   "greetingPortrait": "assets/mayors/greeting-eunseo.png",
   "greetingDate": "2026년 10월 8일",
-  "greetingSign": "송 은 석",
+  "greetingSign": "신 제 희",
   "profilePortrait": "assets/mayors/profile-song.png",
-  "profileTitle": "송은석 금성도지사",
+  "profileTitle": "신제희 금성도지사",
   "education": [
     "금성고 졸업",
     "도원경종합대학 도원경주의학과 삼잘주의전공 졸업"

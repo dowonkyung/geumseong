@@ -1,5 +1,5 @@
 const gnbDim=document.createElement('div');gnbDim.className='gnb-dim';gnbDim.hidden=true;gnbDim.setAttribute('aria-hidden','true');document.querySelector('header').after(gnbDim);
-const menu=window.GEUMSEONG_NAV_MENU||{"송은석입니다":{"인사말":[],"프로필":[],"취임사":[]},"도정24시":{"도정갤러리":["포토갤러리","영상갤러리"],"도지사동정":[],"언론기사":[]},"공약과 실천":{"공약실천":["공약관리"],"매니페스토":["선거공약"]}};
+const menu=window.GEUMSEONG_NAV_MENU||{"신제희입니다":{"인사말":[],"프로필":[],"취임사":[]},"도정24시":{"도정갤러리":["포토갤러리","영상갤러리"],"도지사동정":[],"언론기사":[]},"공약과 실천":{"공약실천":["공약관리"],"매니페스토":["선거공약"]}};
 const $=s=>document.querySelector(s);
 const navList=document.querySelector('#gnb>ul');
 for(const [name,groups] of Object.entries(menu)){
@@ -50,7 +50,7 @@ const sitemapTitle=document.createElement('h2');sitemapTitle.id='office-sitemap-
 const sitemapClose=document.createElement('button');sitemapClose.type='button';sitemapClose.className='office-sitemap-close';sitemapClose.setAttribute('aria-label','전체메뉴 닫기');sitemapClose.innerHTML='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19" stroke="#464C53" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const sitemapBody=document.createElement('nav');sitemapBody.className='popup-body';sitemapBody.setAttribute('aria-label','열린도지사실 전체메뉴');
 const sitemapList=document.createElement('ul');sitemapList.className='portal-sitemap';
-const officeRoutes={'송은석입니다':'mayor.html#greeting','인사말':'mayor.html#greeting','프로필':'mayor.html#profile','취임사':'mayor.html#inaugural','도정24시':'mayor.html#gallery','도정갤러리':'mayor.html#gallery','포토갤러리':'photo.html','영상갤러리':'video.html','도지사동정':'activity.html','언론기사':'media.html','공약과 실천':'mayor.html#promise','공약실천':'mayor.html#promise','공약관리':'mayor.html#promise','매니페스토':'mayor.html#manifesto','선거공약':'mayor.html#election'};
+const officeRoutes={'신제희입니다':'mayor.html#greeting','인사말':'mayor.html#greeting','프로필':'mayor.html#profile','취임사':'mayor.html#inaugural','도정24시':'mayor.html#gallery','도정갤러리':'mayor.html#gallery','포토갤러리':'photo.html','영상갤러리':'video.html','도지사동정':'activity.html','언론기사':'media.html','공약과 실천':'mayor.html#promise','공약실천':'mayor.html#promise','공약관리':'mayor.html#promise','매니페스토':'mayor.html#manifesto','선거공약':'mayor.html#election'};
 function sitemapLink(text){const a=document.createElement('a');a.textContent=text;a.href=officeRoutes[text]||'mayor.html';return a}
 for(const [group,items]of Object.entries(menu)){const column=document.createElement('li');column.append(sitemapLink(group));const list=document.createElement('ul');list.className='normal-type dot';for(const[label,children]of Object.entries(items)){const item=document.createElement('li');item.append(sitemapLink(label));if(children.length){const nested=document.createElement('ul');nested.className='normal-type hyphen';for(const child of children){const li=document.createElement('li');li.append(sitemapLink(child));nested.append(li)}item.append(nested)}list.append(item)}column.append(list);sitemapList.append(column)}
 sitemapList.style.setProperty('--sitemap-columns',Object.keys(menu).length);

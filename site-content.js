@@ -1,6 +1,6 @@
 // 도지사 섹션에서 수정할 내용입니다. 이름, 인사말, 사진, 소식 이미지, 하단 슬로건을 교체하세요.
 window.GEUMSEONG_MAYOR = {
-  name: '송은석',
+  name: '신제희',
   greeting: ['도민과 함께! 새로운 금성!', '더 깊이 듣고, 더 넓게 품으며', '도민 여러분과 늘 함께하겠습니다.'],
   portrait: 'assets/mayor111.png', // 투명 배경 PNG 권장, 기준 430 × 418px
   slogan: 'assets/slogan.png',

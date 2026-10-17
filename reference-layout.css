@@ -131,7 +131,7 @@ header .header-middle .bottom-menu .logo h1 a{
   display: block;
   width: 148px;
   height: 50px;
-  background: url("assets/geumseong-logo.svg") no-repeat 0 0/100%;
+  background: url("assets/geumseong-logo-brand.svg") no-repeat 0 0/100%;
 }
 @media only screen and (max-width: 63.99em){header .header-middle .bottom-menu .logo h1 a{
     width: 92px;
@@ -395,10 +395,10 @@ header .header-bottom nav > ul > li.is-other > a::before{
   display: none;
 }
 header .header-bottom nav > ul > li.active > a{
-  color: #052B57;
+  color: #432E54;
 }
 @media only screen and (max-width: 63.99em){header .header-bottom nav > ul > li.active > a{
-    color: #052B57;
+    color: #432E54;
     background-color: #fff;
   }
 }
@@ -406,7 +406,7 @@ header .header-bottom nav > ul > li.active > a::after{
   content: "";
   width: 100%;
   height: 3px;
-  background-color: #052B57;
+  background-color: #432E54;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -490,7 +490,7 @@ header .header-search input{
     width: 100%;
     height: 48px;
     border-radius: 6px;
-    border: 1px solid #0B50D0;
+    border: 1px solid #845BA6;
     background-color: #fff;
     padding-left: 16px;
   }
@@ -585,7 +585,7 @@ header .dropdown .mypage-info p{
 }
 header .dropdown .mypage-info span{
   font-size: 15px;
-  color: #0B50D0;
+  color: #845BA6;
   padding-left: 18px;
   background: url("assets/reference/ico_time.svg") no-repeat 0 center;
 }
@@ -677,7 +677,7 @@ header .drop-menu .top .time{
   font-size: 15px;
 }
 header .drop-menu .top .time span{
-  color: #2A5CAA;
+  color: #845BA6;
   padding-left: 18px;
   background: url("assets/reference/ico_time.svg") no-repeat 0 center;
 }
@@ -740,7 +740,7 @@ header .drop-menu .logout span{
 }
 .gnb-wrap ul li a:not(.tit a):hover{
   background-color: #EEF2F7;
-  color: #052B57;
+  color: #432E54;
   font-weight: 700;
 }
 .gnb-wrap ul li a::before{
@@ -1178,8 +1178,8 @@ header .drop-menu .logout span{
     -webkit-box-ordinal-group: 2;
         -ms-flex-order: 1;
             order: 1;
-    background: -webkit-gradient(linear, left bottom, right top, from(#173968), to(#2A5CAA));
-    background: linear-gradient(to top right, #173968, #2A5CAA);
+    background: -webkit-gradient(linear, left bottom, right top, from(#173968), to(#845BA6));
+    background: linear-gradient(to top right, #173968, #845BA6);
     margin-top: 430px;
   }
 }
@@ -1551,7 +1551,7 @@ header .drop-menu .logout span{
   }
 }
 .mayor-section .top .mayor-info ul li a:hover{
-  background-color: #2A5CAA;
+  background-color: #845BA6;
 }
 .mayor-section .top .mayor-info ul li a::before{
   content: "";
