@@ -1,5 +1,5 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),crypto=require('crypto');
-const root=path.resolve(__dirname,'..'),origin='https://dowonkyung.github.io/geumseong',fallback=origin+'/assets/og-geumseong.png';
+const root=path.resolve(__dirname,'..'),origin='https://geumseong.saevit.online',fallback=origin+'/assets/og-geumseong.png';
 const ctx={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'board-config.js'),'utf8'),ctx);
 const config=ctx.window.GEUMSEONG_BOARD_CONFIG;
 const sdk=vm.runInThisContext(fs.readFileSync(path.join(root,'assets/vendor/supabase.js'),'utf8')+';supabase');
@@ -17,9 +17,9 @@ rows('geumseong_community_posts','id,title,board_type',false)
 ]);
 for(const row of groups.flat()){if(!/^[a-z-]+$/.test(row.board_type)||! /^[0-9a-f-]{36}$/i.test(row.id))continue;
 const imageUrl=row.thumbnail_path?await image(row.bucket,row.thumbnail_path):fallback;
-const route=row.board_type+'/'+row.id,share='/share/'+route+'/',target='/geumseong/'+row.board_type+'.html?id='+encodeURIComponent(row.id),title=row.title+' | 금성도',description='잘먹고 잘살고 잘먹고사는 인민의 도시, 금성도 금성도입니다.';
+const route=row.board_type+'/'+row.id,share='/share/'+route+'/',target='/'+row.board_type+'.html?id='+encodeURIComponent(row.id),title=row.title+' | 금성도',description='잘먹고 잘살고 잘먹고사는 인민의 도시, 금성도 금성도입니다.';
 manifest[route]=share;
-files.set(route+'/index.html','<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(title)+'</title><meta name="description" content="'+escape(description)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+escape(title)+'"><meta property="og:description" content="'+escape(description)+'"><meta property="og:image" content="'+escape(imageUrl)+'"><meta property="og:url" content="'+origin+share+'"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="'+escape(title)+'"><meta name="twitter:image" content="'+escape(imageUrl)+'"><link rel="canonical" href="'+origin+share+'"><script src="/geumseong/share-redirect.js" defer></script></head><body><h1>'+escape(row.title)+'</h1><a data-post-link href="'+target+'">게시글 보기</a></body></html>');
+files.set(route+'/index.html','<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+escape(title)+'</title><meta name="description" content="'+escape(description)+'"><meta property="og:type" content="article"><meta property="og:title" content="'+escape(title)+'"><meta property="og:description" content="'+escape(description)+'"><meta property="og:image" content="'+escape(imageUrl)+'"><meta property="og:url" content="'+origin+share+'"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="'+escape(title)+'"><meta name="twitter:image" content="'+escape(imageUrl)+'"><link rel="canonical" href="'+origin+share+'"><script src="/share-redirect.js" defer></script></head><body><h1>'+escape(row.title)+'</h1><a data-post-link href="'+target+'">게시글 보기</a></body></html>');
 }
 files.set('manifest.json',JSON.stringify(manifest,null,2)+'\n');
 const destination=path.join(root,'share'),stage=path.join(root,'.share-stage');fs.mkdirSync(stage,{recursive:true});

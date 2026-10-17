@@ -2,8 +2,8 @@
 
 기존 Supabase 프로젝트의 SQL Editor에서 이 저장소의 **supabase/community.sql 전체**를 붙여넣고 Run을 누릅니다. 기존 schema.sql과 관리자 계정은 그대로 사용합니다. 별도 키나 비밀번호를 홈페이지 설정 파일에 넣을 필요는 없습니다.
 
-- 자유게시판: https://dowonkyung.github.io/geumseong/free.html
-- 칭찬게시판: https://dowonkyung.github.io/geumseong/praise.html
+- 자유게시판: https://geumseong.saevit.online/free.html
+- 칭찬게시판: https://geumseong.saevit.online/praise.html
 
 ## 사용 방법
 

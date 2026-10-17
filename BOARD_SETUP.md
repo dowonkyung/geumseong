@@ -6,7 +6,7 @@
 
 이 저장소는 빌드 없이 정적 파일을 그대로 배포합니다. 저장소의 **Settings → Pages**에서 배포 주소와 소스 위치를 확인합니다. 브랜치 배포를 사용할 때는 **Deploy from a branch → main → /(root)**로 설정합니다. 이미 GitHub Actions로 배포 중이라면 기존 파이프라인에서 루트의 HTML·CSS·JS·MJS와 `assets/`를 함께 배포해야 합니다. `.nojekyll`을 포함했습니다.
 
-실제 홈페이지 주소 뒤에 `news.html`을 붙이면 새소식 목록, `news-write.html`을 붙이면 작성 화면입니다. 예: `https://dowonkyung.github.io/geumseong/news.html`. 404가 표시되면 Pages의 배포 주소·브랜치·폴더와 최근 빌드 결과를 확인합니다. 이 안내는 예시 주소이며 실제 배포 성공을 확인한 주소는 아닙니다.
+실제 홈페이지 주소 뒤에 `news.html`을 붙이면 새소식 목록, `news-write.html`을 붙이면 작성 화면입니다. 예: `https://geumseong.saevit.online/news.html`. 404가 표시되면 Pages의 배포 주소·브랜치·폴더와 최근 빌드 결과를 확인합니다. 이 안내는 예시 주소이며 실제 배포 성공을 확인한 주소는 아닙니다.
 
 ## 1. Supabase 프로젝트 만들기
 
@@ -35,7 +35,7 @@ window.GEUMSEONG_BOARD_CONFIG = {
 
 **secret/service_role 키와 관리자 비밀번호는 이 파일이나 GitHub에 넣지 않습니다.** 공개키는 브라우저에서 사용하는 키이며 실제 권한은 RLS와 등록된 관리자 UUID로 제한합니다.
 
-프로젝트 Auth 설정의 Site URL에는 실제 GitHub Pages 홈페이지 주소를 입력합니다. 예: `https://dowonkyung.github.io/geumseong/`. 본 구현은 이메일·비밀번호 로그인이라 메일 인증 링크로 로그인 세션을 처리하지 않습니다.
+프로젝트 Auth 설정의 Site URL에는 실제 GitHub Pages 홈페이지 주소를 입력합니다. 예: `https://geumseong.saevit.online/`. 본 구현은 이메일·비밀번호 로그인이라 메일 인증 링크로 로그인 세션을 처리하지 않습니다.
 
 ## 3. 게시글 작성
 

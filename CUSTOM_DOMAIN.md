@@ -1,6 +1,6 @@
 # Spaceship 도메인 연결
 
-연결 주소: `https://dowonkyung.github.io/geumseong/`
+연결 주소: `https://geumseong.saevit.online/`
 
 저장소 루트의 `CNAME` 파일에는 `geumseong.saevit.online`을 넣었습니다. DNS 설정은 별도로 완료해야 합니다.
 
@@ -18,7 +18,7 @@
 
 3. GitHub Pages의 DNS 검사 통과 후 **Enforce HTTPS**를 켭니다. DNS 반영과 인증서 준비는 최대 24시간 걸릴 수 있습니다.
 4. 새 주소에서 홈페이지·새소식·본문 사진·첨부파일을 확인하고 관리자 계정으로 다시 로그인합니다. 로그인 세션과 이 기기 임시글은 주소별로 저장되므로, 이전 주소의 임시글은 이전 주소에서 확인합니다.
-5. Supabase Authentication의 URL Configuration → Site URL도 `https://dowonkyung.github.io/geumseong/`로 갱신합니다. 현재 이메일·비밀번호 로그인은 유지됩니다.
+5. Supabase Authentication의 URL Configuration → Site URL도 `https://geumseong.saevit.online/`로 갱신합니다. 현재 이메일·비밀번호 로그인은 유지됩니다.
 
 현재 사이트는 상대 경로로 파일을 참조하므로 도메인 전환을 위해 HTML의 링크를 일괄 변경하지 않아도 됩니다. 브랜치 배포에서 `CNAME` 파일을 유지하세요. GitHub Actions 배포로 변경한다면 Pages 설정에서 Custom domain을 직접 관리합니다.
 
