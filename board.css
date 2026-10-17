@@ -139,3 +139,11 @@ body.board-page .content-head .content-title-wrap .content-actions button{backgr
  body.board-page .board-view-table .table-line dl dd.table-file .btn-wrap .btn-view::after{left:-4px;top:11px}
  body.board-page .board-view-table .table-line dl dd.table-file .btn-wrap .btn-normal span{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%);white-space:nowrap!important}
 }
+
+
+/* Fit preview containers to the rendered document instead of reserving empty viewport space. */
+body.preview-page #file-preview{min-height:0;padding-bottom:0}
+body.preview-page #file-preview .pdf-stage{height:auto;min-height:0;padding-bottom:0}
+body.preview-page #file-preview .preview-text,
+body.preview-page #file-preview .preview-error{margin-top:0;margin-bottom:0}
+body.preview-page #file-preview .preview-image{display:block;margin-bottom:0}
