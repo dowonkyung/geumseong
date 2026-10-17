@@ -1,0 +1,36 @@
+name: Initialize Geumseong website
+on:
+  push:
+    paths: ['.github/workflows/initialize-geumseong.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy complete source website
+        run: |
+          git clone --depth 1 https://github.com/dowonkyung/angangjin.git "$RUNNER_TEMP/angangjin-source"
+          node <<'NODE'
+          const fs=require('fs'),path=require('path');
+          const source=path.join(process.env.RUNNER_TEMP,'angangjin-source'),target=process.cwd();
+          for(const name of fs.readdirSync(source)){if(['.git','.github','CNAME','share'].includes(name))continue;fs.cpSync(path.join(source,name),path.join(target,name),{recursive:true});}
+          const replacements=[['https://angangjin.saevit.online','https://dowonkyung.github.io/geumseong'],['안강진구','금성도'],['안강진','금성'],['Angangjin-gu','Geumseong-do'],['Angangjin','Geumseong'],['ANGANGJIN','GEUMSEONG'],['angangjin','geumseong'],['구청장','도지사'],['구청','도청'],['구민','도민'],['구정','도정'],['구의회','도의회'],['구보','도보'],['구의 상징','도의 상징'],['구의 동식물','도의 동식물']];
+          function walk(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){if(entry.name==='.git'||entry.name==='.github')continue;let file=path.join(dir,entry.name);if(entry.isDirectory())walk(file);else if(/\.(html|css|js|cjs|json|md|svg|txt|sql)$/.test(entry.name)){let text=fs.readFileSync(file,'utf8');for(const[a,b]of replacements)text=text.split(a).join(b);fs.writeFileSync(file,text);}const renamed=entry.name.split('angangjin').join('geumseong');if(renamed!==entry.name)fs.renameSync(file,path.join(dir,renamed));}}
+          walk(target);
+          fs.writeFileSync('board-config.js',"// 금성도 전용 Supabase 프로젝트의 공개 설정을 입력하세요.\nwindow.GEUMSEONG_BOARD_CONFIG = {supabaseUrl:'', publishableKey:'', bucket:'news-files'};\n");
+          fs.mkdirSync('share',{recursive:true});fs.writeFileSync('share/manifest.json','{}\n');
+          let share=fs.readFileSync('post-share.js','utf8').replace("fetch('/share/manifest.json'","fetch(new URL('share/manifest.json',document.baseURI)");fs.writeFileSync('post-share.js',share);
+          fs.writeFileSync('GEUMSEONG_SETUP.md','# 금성도 홈페이지\n\n안강진구 홈페이지 전체 디자인·정적 자료·게시판 코드를 복제했습니다.\n\n1. Settings → Pages에서 Deploy from a branch, main, /(root)를 선택하세요. 기본 주소는 https://dowonkyung.github.io/geumseong/ 입니다.\n2. 새 도메인을 정한 후 CNAME과 HTML의 미리보기 주소, scripts/refresh-share-pages.cjs의 origin을 변경하세요. 기존 안강진구 CNAME과 공개 게시글 스냅샷은 복제하지 않았습니다.\n3. 별도 Supabase 프로젝트에서 supabase 폴더 SQL을 설치하고 board-config.js에 공개 URL·키를 입력하세요. 기존 안강진구 저장소와 관리자·게시글은 연결하지 않았습니다.\n4. 로고·사진·배너 및 설명은 복제된 임시 자료입니다. 각 config.js와 assets에서 교체하세요.\n5. 공유 미리보기 작업은 .github/workflows/share-previews.yml을 직접 실행할 수 있습니다. 도메인·데이터베이스를 연결한 후 예약 실행을 설정하세요.\n');
+          NODE
+          node scripts/sync-navigation.cjs
+      - name: Save copied website
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Copy complete municipal website and initialize Geumseong branding"
+          git push
