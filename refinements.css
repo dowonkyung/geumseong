@@ -42,3 +42,9 @@ body{font-family:"Pretendard GOV","Malgun Gothic",sans-serif}.gov .inner{display
 @media(min-width:768px) and (max-width:1023px){.search-side .page-item .secondary-links{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}}
 @media(max-width:767px){.search-side .page-item{padding:20px 12px;border-radius:24px}.search-side .primary-links button{font-size:17px}.search-side .primary-links button span{width:52px;height:52px;background-size:52px}.search-side .page-item .secondary-links{gap:8px;padding:18px 10px}.search-side .page-item .secondary-links button{flex-direction:column;font-size:13px;gap:6px}.services{padding:30px 30px 0}.services .service-icon{width:64px;height:64px;border-radius:18px;margin-bottom:12px}.services .service-icon svg{width:33px;height:33px}.services .service-link{font-size:13px}.services .services-prev,.services .services-next{width:28px;height:28px;top:53px;background-size:20px}}
 @media(prefers-reduced-motion:reduce){.services .service-icon{transition:none}}
+
+
+/* Four main shortcuts, including directions, matching the reference layout. */
+.search-side .primary-links{grid-template-columns:repeat(4,minmax(0,1fr))}
+.search-side .primary-links button[data-page="오시는 길"] span{background-image:url("assets/icons/shortcut-directions.svg")}
+@media(max-width:767px){.search-side .primary-links button{padding:0 4px;font-size:14px;white-space:nowrap}}
