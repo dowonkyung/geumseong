@@ -46,5 +46,5 @@ body{font-family:"Pretendard GOV","Malgun Gothic",sans-serif}.gov .inner{display
 
 /* Four main shortcuts, including directions, matching the reference layout. */
 .search-side .primary-links{grid-template-columns:repeat(4,minmax(0,1fr))}
-.search-side .primary-links button[data-page="오시는 길"] span{background-image:url("assets/icons/shortcut-directions.svg")}
+.search-side .primary-links button[data-page="오시는 길"] span{background-image:url("assets/icons/shortcut-directions.svg?v=2")}
 @media(max-width:767px){.search-side .primary-links button{padding:0 4px;font-size:14px;white-space:nowrap}}
