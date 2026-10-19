@@ -7,3 +7,12 @@
 .directory-page .directory-toolbar{justify-content:flex-end;margin:24px 0 0}
 
 .directory-page .directory-toolbar:has(>#directory-edit[hidden]){display:none}
+
+.directory-person img{display:block;width:80px;max-width:100%;height:100px;object-fit:cover;border-radius:6px;margin:0 auto 8px}
+.directory-person>span{display:block;text-align:center}
+.directory-photo-editor{display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;min-width:0}
+.directory-photo-editor img{width:64px;height:80px;object-fit:cover;border-radius:4px}
+.directory-photo-editor label{flex:1;min-width:0}
+.directory-photo-editor input[type=file]{max-width:100%;height:auto}
+.directory-editor input:focus-visible,.directory-editor textarea:focus-visible{outline:3px solid #111;outline-offset:0}
+@media(max-width:767px){.directory-person img{width:60px;height:75px}}
