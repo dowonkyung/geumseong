@@ -7,7 +7,7 @@ window.GEUMSEONG_SYMBOLS={
     "alt": "금성도 심볼",
     "details": [
       "대표색: #845BA6",
-      "꽃의 형상은 금성도민의 뜻이 모여 만들어진 금성도를 상징하며, 중심의 공간은 도민에게 열려있고 가감없는 투명한 도정의 의미가 담겨있다."
+      "꽃의 형상은 금성도민의 뜻이 모여 만들어진 금성도를 상징하며, 중심의 오각형 공간은 도민에게 열려있고 가감없는 투명한 도정의 의미가 담겨있다."
     ],
     "downloads": [
       {
@@ -22,7 +22,7 @@ window.GEUMSEONG_SYMBOLS={
       },
       {
         "label": "상하조합",
-        "image": "assets/geumseong-logo-brand.svg"
+        "image": "assets/geumseong-logo-hor.svg"
       },
       {
         "label": "좌우조합",
