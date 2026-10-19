@@ -120,6 +120,7 @@ header .header-middle .bottom-menu .logo h1 a[href="./"]::after{
 }
 
 /* Official site notice typography. */
-header .header-top span{font-size:14px}
+header .header-top span{font-size:15px}
+@media(max-width:1000px){header .header-top span{font-size:14px}}
 @media(max-width:767px){header .header-top span{font-size:13px}}
 @media(max-width:360px){header .header-top span{font-size:12px}}
