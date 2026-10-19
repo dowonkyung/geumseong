@@ -1,8 +1,8 @@
 // 이미지 경로·설명·다운로드 파일을 이곳에서 교체하세요.
 window.GEUMSEONG_SYMBOLS={
   "mark": {
-    "title": "구마크(City Identity)",
-    "description": "금성도를 나타내는 구마크입니다.",
+    "title": "심벌마크(CI)",
+    "description": "금성도를 나타내는 심벌마크입니다.",
     "image": "assets/geumseong-icon.svg",
     "alt": "금성도 심볼",
     "details": [
