@@ -118,3 +118,8 @@ header .header-middle .bottom-menu .logo h1 a[href="./"]::after{
  header .header-middle .bottom-menu .logo h1 a[href="./"]::before{animation:none;opacity:1}
  header .header-middle .bottom-menu .logo h1 a[href="./"]::after{animation:none;opacity:0}
 }
+
+/* Official site notice typography. */
+header .header-top span{font-size:14px}
+@media(max-width:767px){header .header-top span{font-size:13px}}
+@media(max-width:360px){header .header-top span{font-size:12px}}
