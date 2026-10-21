@@ -987,3 +987,7 @@ li:has(> .org-side-left) {
 .organization-page .org-province .org-subgroup-title{display:block;font-weight:700;margin-top:10px}
 .organization-page .org-province .dept-list .dept-list{padding:10px 0 12px 16px;display:flex;flex-direction:column;gap:8px}
 .organization-page .org-province .dept-list a{overflow-wrap:anywhere}
+
+.organization-page .org-province .dept-list .dept-list{border:0;border-radius:0;background:transparent;min-height:0;height:auto;width:auto}
+.organization-page .org-province .dept-list .dept-list::before{display:none}
+.organization-page .org-province .dept>.dept-list{padding-right:8px}
