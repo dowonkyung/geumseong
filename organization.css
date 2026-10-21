@@ -1003,3 +1003,13 @@ li:has(> .org-side-left) {
 .organization-page .org-province .org-advisors>.col::before{content:"";position:absolute;top:50%;height:1px;background:#B1B8BE}
 .organization-page .org-province .org-advisors>.col:nth-child(odd)::before{left:50%;right:-6px}
 .organization-page .org-province .org-advisors>.col:nth-child(even)::before{left:-6px;right:50%}
+
+/* Continue the governor trunk into the direct-office distribution line. */
+.organization-page .org-province .org-governor-departments::before{content:"";position:absolute;top:0;left:50%;width:1px;height:24px;background:#B1B8BE}
+.organization-page .org-province .org-governor-departments>li::before{display:block;top:0;height:24px}
+@media only screen and (max-width:47.99em){
+.organization-page .org-province .org-governor-departments>li::after{display:block;top:0}
+.organization-page .org-province .org-governor-departments>li:nth-child(odd)::after{left:50%;right:-8px;height:100%;background:transparent;border-top:1px solid #B1B8BE;border-right:1px solid #B1B8BE}
+.organization-page .org-province .org-governor-departments>li:nth-child(even)::after{left:-8px;right:50%;height:1px;background:#B1B8BE}
+.organization-page .org-province .org-governor-departments>li:nth-last-child(2)::after{height:0;border-right:0}
+}
