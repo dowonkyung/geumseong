@@ -1026,3 +1026,6 @@ li:has(> .org-side-left) {
 .organization-page .org-province.org-connectors-ready .org-level-departments>li::after,
 .organization-page .org-province.org-connectors-ready .dept-list::before{display:none}
 .organization-page .org-province .dept-title{position:relative;z-index:3}
+
+/* Leave clear space below each row of department lists before the next bus. */
+.organization-page .org-province .org-level-departments{row-gap:32px}
