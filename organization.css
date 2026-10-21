@@ -975,3 +975,15 @@ li:has(> .org-side-left) {
 
 
 .organization-page .org-node-citizen,.organization-page .org-node-vice,.organization-page .org a.org-node-vice:is(:hover,:active,:visited,:focus){color:#12343A}
+
+/* Keep the existing four-column chart for each workbook reporting group. */
+.organization-page .org-province .org-advisors{gap:12px;margin-top:24px}
+.organization-page .org-province .org-advisors>.col{justify-content:center}
+.organization-page .org-province .org-advisors>.col::after{display:none}
+.organization-page .org-province .org-advisors .org-side{width:200px}
+.organization-page .org-province .org-branch-heading{margin-top:40px}
+.organization-page .org-province .org-branch-heading .org-node{max-width:100%;width:auto;min-width:200px;line-height:1.5}
+.organization-page .org-province .org-branch-heading .org-node::before{display:none}
+.organization-page .org-province .org-subgroup-title{display:block;font-weight:700;margin-top:10px}
+.organization-page .org-province .dept-list .dept-list{padding:10px 0 12px 16px;display:flex;flex-direction:column;gap:8px}
+.organization-page .org-province .dept-list a{overflow-wrap:anywhere}
