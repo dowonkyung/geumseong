@@ -995,3 +995,11 @@ li:has(> .org-side-left) {
 .organization-page .org-province .org-advisors{grid-template-columns:repeat(2,minmax(0,1fr))}
 .organization-page .org-province .org-advisors>.col{min-width:0}
 .organization-page .org-province .org-advisors .org-side{width:100%;max-width:200px}
+
+/* Connect the governor to every adviser without moving their boxes. */
+.organization-page .org-province .org-level-mid{margin-top:0}
+.organization-page .org-province .org-node-mayor::after{height:24px}
+.organization-page .org-province .org-advisors::before{content:"";position:absolute;left:50%;top:-24px;bottom:0;width:1px;background:#B1B8BE}
+.organization-page .org-province .org-advisors>.col::before{content:"";position:absolute;top:50%;height:1px;background:#B1B8BE}
+.organization-page .org-province .org-advisors>.col:nth-child(odd)::before{left:50%;right:-6px}
+.organization-page .org-province .org-advisors>.col:nth-child(even)::before{left:-6px;right:50%}

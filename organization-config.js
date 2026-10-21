@@ -3,7 +3,7 @@ window.GEUMSEONG_ORGANIZATION=[
   {
     "name": "도지사",
     "parent": null,
-    "label": "신제희 금성도지사"
+    "label": "금성도지사"
   },
   {
     "name": "비서실",
@@ -136,7 +136,7 @@ window.GEUMSEONG_ORGANIZATION=[
   {
     "name": "행정1부지사",
     "parent": "도지사",
-    "label": "후지나가 사쿠야 행정1부지사"
+    "label": "행정1부지사"
   },
   {
     "name": "행정국",
@@ -397,7 +397,7 @@ window.GEUMSEONG_ORGANIZATION=[
   {
     "name": "행정2부지사",
     "parent": "도지사",
-    "label": "후지나가 료 행정2부지사"
+    "label": "행정2부지사"
   },
   {
     "name": "생활특별도추진단",
@@ -706,7 +706,7 @@ window.GEUMSEONG_ORGANIZATION=[
   {
     "name": "살림경제부지사",
     "parent": "도지사",
-    "label": "마에다 리꾸 살림경제부지사"
+    "label": "살림경제부지사"
   },
   {
     "name": "안강르네상스추진단",
