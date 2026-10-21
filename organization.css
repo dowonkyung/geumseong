@@ -1029,3 +1029,13 @@ li:has(> .org-side-left) {
 
 /* Leave clear space below each row of department lists before the next bus. */
 .organization-page .org-province .org-level-departments{row-gap:32px}
+
+/* Let columns shrink inside the content area at intermediate widths. */
+.organization-page .org-province .org-level-departments{width:100%;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(16px,4vw,52px)}
+.organization-page .org-province .org-level-departments>li{width:100%;min-width:0}
+.organization-page .org-province .org-level-departments>li>.dept{display:flex;flex-direction:column;min-width:0}
+.organization-page .org-province .dept>.dept-title{flex:0 0 auto}
+.organization-page .org-province .dept>.dept-list{flex:1 1 auto;height:auto;margin:0}
+@media only screen and (max-width:47.99em){
+.organization-page .org-province .org-level-departments{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
+}
