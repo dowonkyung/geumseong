@@ -29,7 +29,7 @@ function draw(){
   for(const title of titles){const body=title.nextElementSibling;if(body?.classList.contains('dept-list')){const a=box(title),b=box(body);line(a.x,a.bottom,a.x,b.top)}}
  }
  if(direct)connectGrid(direct,governor);
- for(const adviser of advisers){const b=box(adviser),r=adviser.getBoundingClientRect(),y=snap(r.top-origin.top+r.height/2);line(governor.x,y,b.x,y)}
+ for(const adviser of advisers){const b=box(adviser),r=adviser.getBoundingClientRect(),y=snap(r.top-origin.top+r.height/2);line(governor.x,y,snap((b.x<governor.x?r.right:r.left)-origin.left),y)}
  for(const heading of chart.querySelectorAll('.org-branch-heading')){
   const grid=heading.nextElementSibling?.querySelector('.org-level-departments');
   if(grid)connectGrid(grid,box(heading.querySelector('.org-node')));
