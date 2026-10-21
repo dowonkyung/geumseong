@@ -1013,3 +1013,16 @@ li:has(> .org-side-left) {
 .organization-page .org-province .org-governor-departments>li:nth-child(even)::after{left:-8px;right:50%;height:1px;background:#B1B8BE}
 .organization-page .org-province .org-governor-departments>li:nth-last-child(2)::after{height:0;border-right:0}
 }
+
+/* One measured connector layer keeps every junction on the same coordinates. */
+.organization-page .org-connectors{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:visible}
+.organization-page .org-province.org-connectors-ready .org-node::before,
+.organization-page .org-province.org-connectors-ready .org-node::after,
+.organization-page .org-province.org-connectors-ready .org-advisors::before,
+.organization-page .org-province.org-connectors-ready .org-advisors>.col::before,
+.organization-page .org-province.org-connectors-ready .org-advisors>.col::after,
+.organization-page .org-province.org-connectors-ready .org-level-departments::before,
+.organization-page .org-province.org-connectors-ready .org-level-departments>li::before,
+.organization-page .org-province.org-connectors-ready .org-level-departments>li::after,
+.organization-page .org-province.org-connectors-ready .dept-list::before{display:none}
+.organization-page .org-province .dept-title{position:relative;z-index:3}
