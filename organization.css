@@ -991,3 +991,7 @@ li:has(> .org-side-left) {
 .organization-page .org-province .dept-list .dept-list{border:0;border-radius:0;background:transparent;min-height:0;height:auto;width:auto}
 .organization-page .org-province .dept-list .dept-list::before{display:none}
 .organization-page .org-province .dept>.dept-list{padding-right:8px}
+
+.organization-page .org-province .org-advisors{grid-template-columns:repeat(2,minmax(0,1fr))}
+.organization-page .org-province .org-advisors>.col{min-width:0}
+.organization-page .org-province .org-advisors .org-side{width:100%;max-width:200px}
